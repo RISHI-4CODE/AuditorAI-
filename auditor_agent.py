@@ -69,16 +69,16 @@ def log_to_notion(task: str, status: str, details: str = ""):
 
 # Example function (later plug real audits here)
 from audits.basic_checks import run_basic_audits
+from audits.ai_audits import run_ai_audit
 
-print("🚀 Running AuditorAgent...")
-
+# Inside main()
 audits = run_basic_audits()
+
+# Add AI-powered audit on some dummy code
+ai_result = run_ai_audit("def add(a, b): return a + b")
+audits.append(ai_result)
+
 for audit in audits:
     msg = f"📢 Audit Result: {audit['task']} - {audit['status']}"
     log_to_slack(msg)
     log_to_notion(audit['task'], audit['status'], audit['details'])
-
-
-if __name__ == "__main__":
-    print("🚀 Running AuditorAgent...")
-    run_basic_audits()
