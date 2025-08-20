@@ -1,0 +1,53 @@
+agent:
+  name: AuditorAgent
+  description: Reviews AI outputs for bias, hallucinations, PII
+  tools:
+    - http
+    - gemini
+    - slack
+    - notion
+  policy:
+    escalate_if: risk_score > 90
+    auto_redo_if: risk_score >= 50
+
+variables:
+  AUDIT_URL: "http://localhost:8000/audit"
+
+steps:
+  - id: audit
+    run:
+      tool: http.post
+      args:
+        url: $AUDIT_URL
+        json:
+          doc: $input.doc
+    save_as: audit_result
+
+  - id: maybe_redo
+    if: ${audit_result.risk_score >= 50 and audit_result.safe_output == null}
+    run:
+      tool: gemini.redo
+      args:
+        text: $input.doc
+        instructions: "Remove PII, reduce toxicity/bias, avoid unverifiable claims."
+    save_as: redo_text
+
+  - id: escalate
+    if: ${audit_result.risk_score > 90}
+    run:
+      tool: slack.approval_card
+      args:
+        channel: "#auditor-alerts"
+        title: "High-risk output"
+        body: "Score ${audit_result.risk_score}. Needs human approval."
+    human_in_loop: true
+
+  - id: log
+    run:
+      tool: notion.append_page
+      args:
+        database_id: "YOUR_DB_ID"
+        props:
+          Title: ${truncate($input.doc, 50)}
+          Risk: ${audit_result.risk_score}
+          Status: ${audit_result.risk_score > 90 ? "Escalated" : (audit_result.risk_score >= 50 ? "Auto-redone" : "Passed")}
