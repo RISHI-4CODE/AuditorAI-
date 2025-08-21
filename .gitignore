@@ -1,2 +1,28 @@
+# Git internals
 .git
+
+# Environment files
 .env
+*.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# SQLite / local databases
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
