@@ -42,9 +42,10 @@ def audit(payload: AuditRequest):
     # side-effects: log + Slack + Notion
     status = "Escalated" if score >= 90 else ("Auto-redone" if score >= 50 else "Passed")
     log_add({"input": text, "result": result.model_dump(), "status": status})
-    log_to_notion(text, score, status, safe_output or "")
 
+    # ✅ Only log to Notion for high-risk audits
     if score >= 90:
+        log_to_notion(text, score, status, safe_output or "")
         post_high_risk(text, score, safe_output or "")
 
     return result
