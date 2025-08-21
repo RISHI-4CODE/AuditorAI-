@@ -1,21 +1,26 @@
+# audit_service/adapters/gemini_adapter.py
 import os
-import google.generativeai as genai
 from dotenv import load_dotenv
+import google.generativeai as genai
+from portia import tool
 
 load_dotenv()
 
-class GeminiAdapter:
-    def __init__(self, api_key: str = None, model: str = "gemini-1.5-flash"):
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        if not self.api_key:
-            raise RuntimeError("Missing GEMINI_API_KEY")
-        genai.configure(api_key=self.api_key)
-        self.model = model
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise RuntimeError("Missing GEMINI_API_KEY")
+genai.configure(api_key=API_KEY)
 
-    def generate(self, prompt: str, max_tokens: int = 512) -> str:
-        try:
-            resp = genai.GenerativeModel(self.model).generate_content(prompt)
-            return resp.text.strip() if resp and resp.text else ""
-        except Exception as e:
-            print("[GeminiAdapter] generate error:", e)
-            return ""
+@tool(name="gemini.redo", description="Redo AI response with stricter safety prompt")
+def redo_response(text: str, instructions: str, max_tokens: int = 512) -> str:
+    """
+    Portia tool: re-generate a safer response using Gemini.
+    """
+    try:
+        prompt = f"{instructions}\n\nOriginal:\n{text}"
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        resp = model.generate_content(prompt)
+        return resp.text.strip() if resp and resp.text else ""
+    except Exception as e:
+        print("[GeminiRedo] error:", e)
+        return ""
