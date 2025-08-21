@@ -61,10 +61,22 @@ def run_audits(response_text: str, context: str = "") -> AuditResult:
         if outcome == "PASS":
             outcome = "FLAG"
 
+    # inside run_audits
+    harmful_prob = clf.predict_proba(response_text)
+    if harmful_prob > 0.5:
+        findings["harmful_ml"] = {"probability": harmful_prob}
+        reasons.append(f"ML harmful classifier p={harmful_prob:.2f}")
+        outcome = "FAIL" if harmful_prob > 0.9 else "FLAG"
+
+    # also compute risk_score
+    risk_score = int(harmful_prob * 100)
+
+
     return AuditResult(
         outcome=outcome,
         reasons=reasons,
         findings=findings,
         original=response_text,
         cleaned=response_text if outcome == "PASS" else None,
+        risk_score=risk_score
     )
