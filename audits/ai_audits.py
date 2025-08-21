@@ -1,33 +1,41 @@
 import os
 import google.generativeai as genai
+from datetime import datetime
 
-# Configure Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+def run_ai_audits_on_code(directory="project_code"):
+    results = []
+    model = genai.GenerativeModel("gemini-1.5-flash")
 
-def run_ai_audit(code_snippet: str):
-    """
-    Send code/data to Gemini and get an AI-powered audit result.
-    """
-    try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = f"""
-        You are an AI Auditor. Review the following code snippet and
-        point out any security, performance, or data quality issues.
+    # Walk through files
+    for root, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(".py"):  # scan Python files
+                filepath = os.path.join(root, file)
+                with open(filepath, "r", encoding="utf-8") as f:
+                    code = f.read()
 
-        Code:
-        {code_snippet}
+                # Send code to Gemini
+                prompt = f"""
+                You are an AI code auditor. Analyze the following Python code:
+                {code}
 
-        Respond in format:
-        - Verdict: PASS/FAIL
-        - Details: short explanation
-        """
-        response = model.generate_content(prompt)
+                Provide:
+                - Security risks
+                - Performance issues
+                - Data quality concerns
+                - Overall PASS/FAIL decision
+                """
+                response = model.generate_content(prompt)
+                text = response.text.strip()
 
-        text = response.text.strip()
+                # Simple pass/fail detection
+                status = "PASS" if "PASS" in text.upper() else "FAIL"
 
-        # Extract PASS/FAIL
-        status = "PASS" if "PASS" in text.upper() else "FAIL"
-        return {"task": "AI Audit", "status": status, "details": text}
+                results.append({
+                    "task": f"AI Audit on {file}",
+                    "status": status,
+                    "details": text,
+                    "timestamp": datetime.utcnow().isoformat()
+                })
 
-    except Exception as e:
-        return {"task": "AI Audit", "status": "FAIL", "details": f"Error: {e}"}
+    return results

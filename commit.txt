@@ -1,0 +1,8 @@
+feat: add live Streamlit dashboard for AI Auditor
+
+- Implemented `dashboard.py` to visualize audit results
+- Integrated with Notion database for fetching logs
+- Added Slack + Notion logging consistency checks
+- Error handling for missing/mismatched Notion properties
+- Added debug mode to display actual Notion property keys
+- Provides real-time status overview of Security, Performance, Data Quality, and AI Audits

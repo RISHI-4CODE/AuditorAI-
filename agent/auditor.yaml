@@ -1,14 +1,17 @@
 agent:
   name: AuditorAgent
   description: Reviews AI outputs for bias, hallucinations, PII
-  tools:
-    - http
-    - gemini
-    - slack
-    - notion
+  tools: [http, gemini, slack, notion]
   policy:
     escalate_if: risk_score > 90
     auto_redo_if: risk_score >= 50
+
+inputs:
+  - name: doc
+    type: string
+outputs:
+  - name: clean_doc
+    type: string
 
 variables:
   AUDIT_URL: "http://localhost:8000/audit"
@@ -19,12 +22,11 @@ steps:
       tool: http.post
       args:
         url: $AUDIT_URL
-        json:
-          doc: $input.doc
+        json: { doc: $input.doc }
     save_as: audit_result
 
   - id: maybe_redo
-    if: ${audit_result.risk_score >= 50 and audit_result.safe_output == null}
+    if: ${audit_result.risk_score >= 50}
     run:
       tool: gemini.redo
       args:
@@ -50,4 +52,11 @@ steps:
         props:
           Title: ${truncate($input.doc, 50)}
           Risk: ${audit_result.risk_score}
+          Before: $input.doc
+          After: ${redo_text ?? $input.doc}
           Status: ${audit_result.risk_score > 90 ? "Escalated" : (audit_result.risk_score >= 50 ? "Auto-redone" : "Passed")}
+
+  - id: output
+    run:
+      assign:
+        clean_doc: ${redo_text ?? $input.doc}

@@ -11,9 +11,9 @@ response = notion.pages.create(
     parent={"database_id": database_id},
     properties={
         "Task": {"title": [{"text": {"content": "Test Audit Entry"}}]},
-        "status": {"select": {"name": "Pending"}},
-        "timestamp": {"date": {"start": datetime.now().isoformat()}},
-        "details": {"rich_text": [{"text": {"content": "This is a test log from AuditorAgent setup."}}]},
+        "status": {"rich_text": {"name": "Pending"}},
+        "timestamp": {"rich_text": {"start": datetime.now().isoformat()}},
+        "Outcome": {"": [{"text": {"content": "This is a test log from AuditorAgent setup."}}]},
     },
 )
 

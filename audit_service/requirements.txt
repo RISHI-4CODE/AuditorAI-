@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+google-generativeai
+slack-sdk
+notion-client
+scikit-learn
+pandas
