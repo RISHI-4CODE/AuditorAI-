@@ -1,35 +1,36 @@
 # app/auditor_agent.py
+from portia import tool
 from app.auditor import run_audits
 from app.models import AuditResult
 from app.notion_utils import log_audit_to_notion
 from storage.db import SessionLocal, Base, engine
 from storage.models import AuditLog
 
-
-# Create tables if not exist
+# Ensure DB tables exist
 Base.metadata.create_all(bind=engine)
 
-
-def audit_and_log(response_text: str, context: str = "") -> AuditResult:
+@tool(name="custom_api_audit", description="Run audit checks on AI output and log results")
+def audit_and_log(doc: str, context: str = "") -> dict:
     """
-    Run audits on a response, then log the results to Notion.
+    Portia tool: runs audits, logs results (DB + Notion), returns risk score + cleaned text.
     """
-    # Run all audits
-    result: AuditResult = run_audits(response_text, context)
+    # Run audits
+    result: AuditResult = run_audits(doc, context)
 
-    # Convert to dict for persistence
+    # Dict format for persistence + Portia
     result_dict = {
         "original": result.original,
         "findings": result.findings,
         "reasons": result.reasons,
         "outcome": result.outcome,
         "cleaned": result.cleaned,
+        "risk_score": result.risk_score if hasattr(result, "risk_score") else 0
     }
 
     # Log to Notion
     log_audit_to_notion(result_dict)
 
-    # Log to DB
+    # Persist in DB
     db = SessionLocal()
     audit_entry = AuditLog(**result_dict)
     db.add(audit_entry)
@@ -37,4 +38,4 @@ def audit_and_log(response_text: str, context: str = "") -> AuditResult:
     db.refresh(audit_entry)
     db.close()
 
-    return result
+    return result_dict
