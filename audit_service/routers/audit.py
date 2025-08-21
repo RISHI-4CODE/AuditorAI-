@@ -5,7 +5,6 @@ from audit_service.services.gemini_client import rate_toxicity_and_bias, rate_ha
 from audit_service.services.scoring import aggregate
 from audit_service.services.logistic_client import score_harm_probability
 from audit_service.storage.memory_log import add as log_add
-from integrations.slack_notify import post_high_risk
 from integrations.notion_logger import log_to_notion
 
 router = APIRouter()
@@ -19,7 +18,7 @@ def audit(payload: AuditRequest):
     pii = detect_pii(text)
     tox = rate_toxicity_and_bias(text)
     hall = rate_hallucination(text)
-    harm_prob = score_harm_probability(text)   # NEW logistic model check
+    harm_prob = score_harm_probability(text)   # logistic model check
 
     # aggregate now includes harm probability
     score, issues, tier = aggregate(pii, tox, hall, harm_prob=harm_prob)
@@ -39,14 +38,12 @@ def audit(payload: AuditRequest):
         raw={}
     )
 
-    # side-effects: log + Slack + Notion
+    # side-effects: memory log + Notion (for high-risk)
     status = "Escalated" if score >= 90 else ("Auto-redone" if score >= 50 else "Passed")
     log_add({"input": text, "result": result.model_dump(), "status": status})
 
-    # ✅ Only log to Notion for high-risk audits
-    if score >= 90:
+    if score >= 90:  # ✅ only high-risk cases go to Notion
         log_to_notion(text, score, status, safe_output or "")
-        post_high_risk(text, score, safe_output or "")
 
     return result
 
