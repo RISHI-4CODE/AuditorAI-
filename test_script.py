@@ -30,9 +30,15 @@ def test_redo():
 
 def test_run_full():
     print("\n=== /run_full ===")
-    payload = {"doc": "", "user_prompt": "Give me a summary of AI safety best practices"}
-    r = requests.post(f"{BASE_URL}/run_full", json=payload)
-    print(pretty(r.json()))
+    r = requests.post(f"{BASE}/run_full", json={
+        "draft": "This draft mentions a fake API key: sk-1234567890abcdef",
+        "user_prompt": "Please audit this"
+    })
+    try:
+        print(pretty(r.json()))
+    except Exception:
+        print("Raw response:", r.text)
+
 
 if __name__ == "__main__":
     print("🚀 Testing AI Auditor API...")
