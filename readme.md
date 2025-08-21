@@ -1,30 +1,25 @@
-# AuditorAgent 🕵️‍♂️
+# 🛡️ AI Auditor
 
-AI-powered agent that audits code & workflows, then logs findings to Notion and sends alerts to Slack.
-
----
-
-## ✅ Setup Steps Done So Far
-
-### 1. Slack Setup
-- Created Slack app with Bot permissions
-- Installed app to workspace
-- Saved `SLACK_BOT_TOKEN` and `SLACK_CHANNEL_ID` in `.env`
-
-### 2. Notion Setup
-- Created `Audit Logs` database in Notion
-- Added properties: Task, Status, Timestamp, Details
-- Created integration + saved `NOTION_API_KEY` and `NOTION_DATABASE_ID` in `.env`
-- Tested connection with `test_notion.py`
-
-### 3. Git Setup
-- Initialized repo with `.gitignore`
-- Added README.md
-- First commit done 🚀
+An **AI-powered auditing service** that analyzes generated text for **risks, bias, hallucinations, PII, and harmful content**.  
+It automatically **reworks unsafe outputs**, logs findings, and stores high-risk cases for future training.
 
 ---
 
-## 🔮 Next Steps
-- Build core `auditor_agent.py` that integrates Slack + Notion
-- Add modular audit functions (code quality, security, etc.)
-- Demo-ready workflow for hackathon
+## ✨ Features
+- 🔍 **PII Detection** – scans text for sensitive data (emails, phone numbers, credit cards, API keys, Aadhaar, IPs).  
+- ⚖️ **Risk Scoring** – assigns a score (0–100) based on PII, toxicity, hallucination, and logistic harm model.  
+- 🛑 **Auto-Redo** – rewrites unsafe outputs into safer alternatives.  
+- 📊 **Tiered Risk Levels** – `low`, `medium`, `high` with thresholds.  
+- 🗃️ **Memory Log + SQLite Storage** – track all audits for debugging & history.  
+- 📝 **Notion Logging** – high-risk cases logged into Notion DB for analysis.  
+- 🚫 **Slack Alerts** (optional, deprecated by roadmap).  
+
+---
+
+## ⚡ Quickstart
+
+### 1️⃣ Clone & Install
+```bash
+git clone <your-repo-url>
+cd ai-auditor
+pip install -r requirements.txt
