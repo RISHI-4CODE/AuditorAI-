@@ -3,6 +3,7 @@ from audit_service.models.schemas import AuditRequest, RedoRequest, AuditResult
 from audit_service.services.pii import detect_pii
 from audit_service.services.gemini_client import rate_toxicity_and_bias, rate_hallucination, rewrite_safe
 from audit_service.services.scoring import aggregate
+from audit_service.services.logistic_client import score_harm_probability
 from audit_service.storage.memory_log import add as log_add
 from integrations.slack_notify import post_high_risk
 from integrations.notion_logger import log_to_notion
@@ -18,7 +19,10 @@ def audit(payload: AuditRequest):
     pii = detect_pii(text)
     tox = rate_toxicity_and_bias(text)
     hall = rate_hallucination(text)
-    score, issues, tier = aggregate(pii, tox, hall)
+    harm_prob = score_harm_probability(text)   # NEW logistic model check
+
+    # aggregate now includes harm probability
+    score, issues, tier = aggregate(pii, tox, hall, harm_prob=harm_prob)
 
     safe_output = None
     if score >= 50:  # auto-redo path
@@ -30,7 +34,7 @@ def audit(payload: AuditRequest):
         pii=pii,
         toxicity=tox,
         hallucination=hall,
-        notes=f"tier={tier}",
+        notes=f"tier={tier}, harm_prob={harm_prob:.2f}",
         safe_output=safe_output,
         raw={}
     )
