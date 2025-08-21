@@ -21,22 +21,25 @@ def audit(payload: AuditRequest):
     harm_prob = score_harm_probability(text)   # logistic model check
 
     # aggregate now includes harm probability
-    score, issues, tier = aggregate(pii, tox, hall, harm_prob=harm_prob)
+    score, issues, tier = aggregate(pii, tox, hall, ml_prob=harm_prob)
 
     safe_output = None
     if score >= 50:  # auto-redo path
         safe_output = rewrite_safe(text, issues)
 
+    from audit_service.models import ScoreDetail
+
     result = AuditResult(
         risk_score=score,
         issues=issues,
         pii=pii,
-        toxicity=tox,
-        hallucination=hall,
+        toxicity=ScoreDetail(score=tox, explanation="toxicity probability"),
+        hallucination=ScoreDetail(score=hall, explanation="hallucination probability"),
         notes=f"tier={tier}, harm_prob={harm_prob:.2f}",
         safe_output=safe_output,
         raw={}
     )
+
 
     # side-effects: memory log + Notion (for high-risk)
     status = "Escalated" if score >= 90 else ("Auto-redone" if score >= 50 else "Passed")

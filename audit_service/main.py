@@ -22,9 +22,9 @@ app.add_middleware(
 )
 
 # ✅ Register routers
-app.include_router(audit.router, prefix="/audit", tags=["audit"])
-app.include_router(log.router, prefix="/logs", tags=["logs"])
-app.include_router(full.router, prefix="/full", tags=["full"])
+app.include_router(audit.router, prefix="", tags=["audit"])
+app.include_router(log.router, prefix="", tags=["logs"])
+app.include_router(full.router, prefix="", tags=["full"])
 
 # ✅ Simple health check
 @app.get("/health")
