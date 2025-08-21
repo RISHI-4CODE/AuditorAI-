@@ -16,8 +16,9 @@ class Findings(BaseModel):
 
 class AuditResult(BaseModel):
     """Final result after passing through all audit checks."""
-    outcome: str  # PASS / FLAG / FAIL
-    findings: Findings
-    sanitized_summary: str  # safe string summary for logs
-    original_response: str
-    final_response: str
+    outcome: str                 # PASS / FLAG / FAIL
+    reasons: List[str]           # human-readable explanations
+    findings: Dict[str, any]     # merged findings from checks
+    original: str                # raw response text
+    cleaned: Optional[str]       # safe version if available
+    risk_score: int              # numeric risk score for Portia policy
