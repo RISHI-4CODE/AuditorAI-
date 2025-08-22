@@ -1,4 +1,3 @@
-# app/auditor_agent.py
 """
 Custom Portia tool that wraps our audit pipeline.
 Runs PII, toxicity, bias, and hallucination checks and returns a unified risk score.
@@ -12,17 +11,18 @@ from app.models import AuditResult
 def audit_and_log(doc: str, mode: str = "output") -> dict:
     """
     Portia tool: runs audits and returns a structured result.
-    This version is simplified for hackathon demo (no DB/Notion logging).
+    This version is simplified for hackathon demo (DB/Notion removed).
     """
-    # Run audits (ML + regex + wiki checks)
+    # Run audits (ML + regex + classifier checks)
     result: AuditResult = run_audits(doc, mode)
 
     # Return structured dictionary for Portia orchestration
     return {
         "original": result.original,
         "findings": result.findings,
+        "flags": result.flags,          # <-- NEW: ML + rule-based flags
         "reasons": result.reasons,
-        "outcome": result.outcome,   # e.g., PASS / FLAG / FAIL
+        "outcome": result.outcome,      # e.g., PASS / FLAG / FAIL
         "cleaned": result.cleaned,
         "risk_score": result.risk_score,
         "mode": mode,
