@@ -1,41 +1,29 @@
 # app/auditor_agent.py
+"""
+Custom Portia tool that wraps our audit pipeline.
+Runs PII, toxicity, bias, and hallucination checks and returns a unified risk score.
+"""
+
 from portia import tool
 from app.auditor import run_audits
 from app.models import AuditResult
-from app.notion_utils import log_audit_to_notion
-from storage.db import SessionLocal, Base, engine
-from storage.models import AuditLog
 
-# Ensure DB tables exist
-Base.metadata.create_all(bind=engine)
-
-@tool(name="custom_api_audit", description="Run audit checks on AI output and log results")
-def audit_and_log(doc: str, context: str = "") -> dict:
+@tool(name="custom_api_audit", description="Run audit checks on input/output text")
+def audit_and_log(doc: str, mode: str = "output") -> dict:
     """
-    Portia tool: runs audits, logs results (DB + Notion), returns risk score + cleaned text.
+    Portia tool: runs audits and returns a structured result.
+    This version is simplified for hackathon demo (no DB/Notion logging).
     """
-    # Run audits
-    result: AuditResult = run_audits(doc, context)
+    # Run audits (ML + regex + wiki checks)
+    result: AuditResult = run_audits(doc, mode)
 
-    # Dict format for persistence + Portia
-    result_dict = {
+    # Return structured dictionary for Portia orchestration
+    return {
         "original": result.original,
         "findings": result.findings,
         "reasons": result.reasons,
-        "outcome": result.outcome,
+        "outcome": result.outcome,   # e.g., PASS / FLAG / FAIL
         "cleaned": result.cleaned,
-        "risk_score": result.risk_score if hasattr(result, "risk_score") else 0
+        "risk_score": result.risk_score,
+        "mode": mode,
     }
-
-    # Log to Notion
-    log_audit_to_notion(result_dict)
-
-    # Persist in DB
-    db = SessionLocal()
-    audit_entry = AuditLog(**result_dict)
-    db.add(audit_entry)
-    db.commit()
-    db.refresh(audit_entry)
-    db.close()
-
-    return result_dict
