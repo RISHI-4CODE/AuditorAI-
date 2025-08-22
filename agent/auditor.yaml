@@ -1,62 +1,72 @@
 agent:
   name: AuditorAgent
-  description: Reviews AI outputs for bias, hallucinations, PII
-  tools: [http, gemini, slack, notion]
-  policy:
-    escalate_if: risk_score > 90
-    auto_redo_if: risk_score >= 50
+  description: Guardrail agent that reviews user inputs & AI outputs
+  tools: [http, gemini]
 
 inputs:
   - name: doc
     type: string
+  - name: mode   # "input" or "output"
+    type: string
+
 outputs:
   - name: clean_doc
+    type: string
+  - name: verdict
     type: string
 
 variables:
   AUDIT_URL: "http://localhost:8000/audit"
 
 steps:
+  # 1. Send text to our audit service (toxicity, bias, pii, hallucination)
   - id: audit
     run:
       tool: http.post
       args:
         url: $AUDIT_URL
-        json: { doc: $input.doc }
+        json: { doc: $input.doc, mode: $input.mode }
     save_as: audit_result
 
-  - id: maybe_redo
-    if: ${audit_result.risk_score >= 50}
+  # 2. Handle USER INPUT side → if flagged, block immediately
+  - id: block_user_input
+    if: ${$input.mode == "input" && audit_result.risk_score >= 50}
+    run:
+      assign:
+        clean_doc: ""
+        verdict: "❌ Input violates safe AI terms"
+
+  # 3. Handle AI OUTPUT side → retry up to 3 times
+  - id: retry_output_1
+    if: ${$input.mode == "output" && audit_result.risk_score >= 50}
     run:
       tool: gemini.redo
       args:
         text: $input.doc
-        instructions: "Remove PII, reduce toxicity/bias, avoid unverifiable claims."
-    save_as: redo_text
+        instructions: "Rephrase safely. Remove PII, reduce toxicity/bias, and avoid unverifiable claims."
+    save_as: redo_text_1
 
-  - id: escalate
-    if: ${audit_result.risk_score > 90}
+  - id: retry_output_2
+    if: ${redo_text_1 && audit_result.risk_score >= 50}
     run:
-      tool: slack.approval_card
+      tool: gemini.redo
       args:
-        channel: "#auditor-alerts"
-        title: "High-risk output"
-        body: "Score ${audit_result.risk_score}. Needs human approval."
-    human_in_loop: true
+        text: $redo_text_1
+        instructions: "Rephrase more strictly with safety filters applied."
+    save_as: redo_text_2
 
-  - id: log
+  - id: retry_output_3
+    if: ${redo_text_2 && audit_result.risk_score >= 50}
     run:
-      tool: notion.append_page
+      tool: gemini.redo
       args:
-        database_id: "YOUR_DB_ID"
-        props:
-          Title: ${truncate($input.doc, 50)}
-          Risk: ${audit_result.risk_score}
-          Before: $input.doc
-          After: ${redo_text ?? $input.doc}
-          Status: ${audit_result.risk_score > 90 ? "Escalated" : (audit_result.risk_score >= 50 ? "Auto-redone" : "Passed")}
+        text: $redo_text_2
+        instructions: "Final attempt: only return factual, non-toxic, PII-free content."
+    save_as: redo_text_3
 
+  # 4. Decide final verdict
   - id: output
     run:
       assign:
-        clean_doc: ${redo_text ?? $input.doc}
+        clean_doc: ${redo_text_3 ?? redo_text_2 ?? redo_text_1 ?? $input.doc}
+        verdict: ${audit_result.risk_score >= 50 && !$redo_text_3 ? "❌ Output unsafe after 3 retries" : "✅ Safe"}
