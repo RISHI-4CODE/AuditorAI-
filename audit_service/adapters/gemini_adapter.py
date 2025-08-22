@@ -12,7 +12,7 @@ genai.configure(api_key=API_KEY)
 
 class GeminiAdapter:
     """
-    Thin wrapper around Google Gemini API to generate and redo responses.
+    Thin wrapper around Google Gemini API to generate and sanitize responses.
     """
 
     def __init__(self, api_key: str = None, model: str = "gemini-1.5-flash"):
@@ -20,52 +20,34 @@ class GeminiAdapter:
             genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel(model)
 
-    def _extract_text(self, resp) -> str:
-        """Normalize Gemini response -> plain string."""
-        if not resp:
-            return ""
-        if hasattr(resp, "text") and resp.text:
-            return resp.text.strip()
-        if hasattr(resp, "candidates") and resp.candidates:
-            parts = resp.candidates[0].content.parts
-            return "".join(p.text for p in parts if hasattr(p, "text")).strip()
-        return ""
-
     def generate(self, prompt: str, max_tokens: int = 512) -> str:
         try:
-            resp = self.model.generate_content(
-                prompt,
-                generation_config={"max_output_tokens": max_tokens},
-            )
-            return self._extract_text(resp)
+            resp = self.model.generate_content(prompt)
+            return resp.text.strip() if resp and resp.text else ""
         except Exception as e:
             print("[GeminiAdapter.generate] error:", e)
             return ""
 
-    def redo(self, text: str, flags: dict, max_tokens: int = 512) -> str:
+    def sanitize(self, text: str, flags: dict, findings: dict, max_tokens: int = 512) -> str:
         """
-        Redo response stricter based on audit flags.
-        - flags: {"pii": 0/1/2, "bias": 0/1/2, "hallucination": 0/1/2}
+        Use Gemini to clean the text based on audit flags.
+        - pii: mask sensitive data
+        - bias: rephrase/remove toxic terms
+        - hallucination: drop or mark unverifiable content
         """
+        instructions = ["You are an auditing assistant. Edit the text as follows:"]
+
+        if flags.get("pii", 0) > 0:
+            instructions.append("Mask or redact any PII such as emails, tokens, or phone numbers.")
+        if flags.get("bias", 0) > 0:
+            instructions.append("Remove or rephrase toxic/bias language into neutral tone.")
+        if flags.get("hallucination", 0) > 0:
+            instructions.append("Remove or clearly mark statements that may be hallucinated or unverifiable.")
+
+        prompt = "\n".join(instructions) + f"\n\nOriginal:\n{text}\n\nCleaned:"
         try:
-            instructions = []
-            if flags.get("pii", 0) > 0:
-                instructions.append("Remove all personal data, emails, tokens, or sensitive identifiers.")
-            if flags.get("bias", 0) > 0:
-                instructions.append("Ensure response is neutral, non-toxic, and unbiased.")
-            if flags.get("hallucination", 0) > 0:
-                instructions.append("Verify correctness and only include facts that can be validated.")
-
-            # If no issues, fallback to softer improvement
-            if not instructions:
-                instructions.append("Improve clarity and correctness without altering meaning.")
-
-            prompt = f"{' '.join(instructions)}\n\nOriginal:\n{text}"
-            resp = self.model.generate_content(
-                prompt,
-                generation_config={"max_output_tokens": max_tokens},
-            )
-            return self._extract_text(resp)
+            resp = self.model.generate_content(prompt)
+            return resp.text.strip() if resp and resp.text else text
         except Exception as e:
-            print("[GeminiAdapter.redo] error:", e)
-            return ""
+            print("[GeminiAdapter.sanitize] error:", e)
+            return text

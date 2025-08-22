@@ -77,6 +77,7 @@ def run_audits(response_text: str, context: str = "") -> AuditResult:
         findings=findings,
         flags=flags,
         original=response_text,
-        cleaned=response_text,  # cleaning/redo handled at orchestration level
+        cleaned=None,  # cleaning now handled by GeminiAdapter
         risk_score=risk_score,
     )
+
