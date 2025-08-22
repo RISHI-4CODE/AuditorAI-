@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 from pydantic import BaseModel
 
 class AuditRequest(BaseModel):
@@ -7,12 +7,10 @@ class AuditRequest(BaseModel):
     context: Optional[str] = None  # optional user question or conversation
 
 class Findings(BaseModel):
-    """Standard findings object returned by each audit check."""
-    pii: Optional[Dict[str, List[str]]] = None
-    security: Optional[List[str]] = None
-    data_quality: Optional[List[str]] = None
-    bias: Optional[Dict[str, List[str]]] = None
-    hallucination: Optional[Dict[str, str]] = None  # label + confidence
+    """Findings from different checks (all simplified to lists of strings)."""
+    pii: Optional[List[str]] = None
+    bias: Optional[List[str]] = None
+    hallucination: Optional[Dict[str, Union[str, float]]] = None  # {"label": ..., "confidence": ...}
 
 class AuditResult(BaseModel):
     """Final result after passing through all audit checks."""
