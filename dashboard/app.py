@@ -3,13 +3,20 @@
 import streamlit as st
 import sys
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Make sure we can import audit_service
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from audit_service.core import run_audit_input, run_audit_output
-from audit_service.services.portia_client import rewrite_with_portia
+from audit_service.services.gemini_adapter import GeminiAdapter
 
+
+# Initialize Gemini adapter
+gemini = GeminiAdapter()
 
 st.set_page_config(page_title="AI Auditor Dashboard", layout="wide")
 
@@ -55,13 +62,13 @@ with tabs[1]:
             st.subheader("📋 Audit Results")
             st.json(results)
 
-            # If flagged, rewrite with Portia
-            flagged_issues = [flag for flag, val in results.items() if val is True]
+            # If flagged, rewrite with Gemini
+            flagged_issues = [flag for flag, val in results["flags"].items() if val > 0]
             if flagged_issues:
-                with st.spinner("Rewriting with Portia..."):
-                    rewritten = rewrite_with_portia(ai_output, flagged_issues)
+                with st.spinner("Rewriting with Gemini..."):
+                    rewritten = gemini.sanitize(ai_output, results["flags"], results)
 
-                st.subheader("📝 Rewrite (Portia)")
+                st.subheader("📝 Rewrite (Gemini)")
                 col1, col2 = st.columns(2)
 
                 with col1:

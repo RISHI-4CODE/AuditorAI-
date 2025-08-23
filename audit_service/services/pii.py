@@ -1,78 +1,81 @@
-import os
 import re
-import joblib
-from typing import Dict, Any
+from typing import List, Dict
 
-# --------------------------------------------------------------------
-# Load ML model once (trained logistic regression for PII detection)
-# --------------------------------------------------------------------
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "..", "models")
-MODEL_PATH = os.path.join(MODEL_DIR, "pii", "logistic.pkl")
+# Regex-based PII patterns with severity
+PII_PATTERNS = {
+    # --- Contact Info ---
+    "PHONE_NUMBER": (
+        re.compile(r"\b(?:\+?\d{1,3})?[-.\s]?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{3,4}\b"),
+        2,
+    ),
+    "EMAIL": (
+        re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"),
+        1,
+    ),
+    "ADDRESS": (
+        re.compile(r"\b\d{1,5}\s\w+(?:\s\w+){0,3}\s(?:Street|St|Avenue|Ave|Road|Rd|Blvd|Lane|Ln|Drive|Dr|Court|Ct)\b"),
+        1,
+    ),
 
-_pii_model = None  # define at module level
-if os.path.exists(MODEL_PATH):
-    try:
-        _pii_model = joblib.load(MODEL_PATH)
-    except Exception as e:
-        print(f"[WARN] Failed to load PII model: {e}")
+    # --- Identity Numbers ---
+    "SSN_US": (re.compile(r"\b\d{3}-\d{2}-\d{4}\b"), 2),
+    "PASSPORT": (re.compile(r"\b[A-Z]{1,2}\d{6,9}\b"), 2),  # Generic (USA, EU, etc.)
+    "DRIVER_LICENSE": (re.compile(r"\b[A-Z0-9]{5,15}\b"), 1),
+    "AADHAAR_IN": (re.compile(r"\b\d{4}\s\d{4}\s\d{4}\b"), 2),  # India Aadhaar
+    "PAN_IN": (re.compile(r"\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b"), 2),  # India PAN
 
-# --------------------------------------------------------------------
-# Regex fallback patterns
-# --------------------------------------------------------------------
-_PATTERNS = {
-    "email": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
-    "phone": r"\b(?:\+?\d{1,3}[-.\s]?)?(?:\d{10})\b",
-    "ip": r"\b(?:\d{1,3}\.){3}\d{1,3}\b",
-    "credit_card": r"\b(?:\d[ -]*?){13,16}\b",
-    "api_key_like": r"\b(?:sk|AKIA|ghp)_[A-Za-z0-9]{20,}\b",
-    "aadhaar_like": r"\b\d{4}\s?\d{4}\s?\d{4}\b",
+    # --- Finance ---
+    "CREDIT_CARD": (re.compile(r"\b(?:\d[ -]*?){13,16}\b"), 2),
+    "IBAN": (re.compile(r"\b[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}\b"), 2),
+    "BANK_ACCOUNT": (re.compile(r"\b\d{9,18}\b"), 2),
+
+    # --- Digital Identifiers ---
+    "IP_ADDRESS": (
+        re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b"),
+        1,
+    ),
+    "IPV6_ADDRESS": (
+        re.compile(r"\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b"),
+        1,
+    ),
+    "MAC_ADDRESS": (
+        re.compile(r"\b([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})\b"),
+        1,
+    ),
+
+    # --- Keys / Tokens ---
+    "API_KEY": (
+        re.compile(r"\b(?:sk|pk|api|key)[_\-]?[a-zA-Z0-9]{16,64}\b"),
+        2,
+    ),
+    "JWT": (
+        re.compile(r"eyJ[A-Za-z0-9_-]+?\.[A-Za-z0-9._-]+?\.[A-Za-z0-9._-]+"),
+        2,
+    ),
+
+    # --- Names ---
+    "PERSON_NAME": (
+        re.compile(r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)+)\b"),
+        1,
+    ),
+    "USERNAME": (
+        re.compile(r"@[A-Za-z0-9_]{3,20}\b"),
+        1,
+    ),
 }
 
-# --------------------------------------------------------------------
-# Detection Function
-# --------------------------------------------------------------------
-def detect_pii(text: str) -> Dict[str, Any]:
+
+def detect_pii(text: str) -> List[Dict]:
     """
-    Detect PII using ML model (preferred) + regex fallback.
-    Returns dict: {category: {"flag": 0|1|2, "matches" or "prob"}}
+    Detect PII using regex rules.
+    Returns a list of dicts: {type, severity, match}
     """
-    findings: Dict[str, Any] = {}
-
-    if _pii_model:  # use ML model if available
-        try:
-            probs = _pii_model.predict_proba([text])[0]  # per-category probs
-            labels = _pii_model.classes_
-            for label, prob in zip(labels, probs):
-                if prob > 0.7:
-                    findings[label] = {"flag": 2, "prob": float(prob)}
-                elif prob > 0.4:
-                    findings[label] = {"flag": 1, "prob": float(prob)}
-                else:
-                    findings[label] = {"flag": 0, "prob": float(prob)}
-        except Exception as e:
-            print(f"[WARN] ML PII detection failed, fallback to regex: {e}")
-
-    # --- REGEX FALLBACK ---
-    if not findings:  # only if ML unavailable or silent
-        for name, pattern in _PATTERNS.items():
-            matches = re.findall(pattern, text)
-            if matches:
-                findings[name] = {"flag": 2, "matches": list(set(matches))}
-
+    findings = []
+    for pii_type, (pattern, severity) in PII_PATTERNS.items():
+        matches = pattern.findall(text)
+        if matches:
+            for m in matches if isinstance(matches, list) else [matches]:
+                findings.append(
+                    {"type": pii_type, "severity": severity, "match": m}
+                )
     return findings
-
-# --------------------------------------------------------------------
-# Summary Function
-# --------------------------------------------------------------------
-def sanitize_summary(findings: Dict[str, Any]) -> Dict[str, int]:
-    """
-    Summarize PII findings without exposing raw values.
-    Returns counts only, never actual sensitive data.
-    """
-    summary = {}
-    for k, v in findings.items():
-        if "matches" in v:
-            summary[k] = len(v["matches"])
-        else:
-            summary[k] = v.get("flag", 0)  # ML case
-    return summary
