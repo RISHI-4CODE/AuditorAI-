@@ -1,24 +1,73 @@
-import requests, streamlit as st
+# dashboard/app.py
 
-st.set_page_config(page_title="AuditorAgent Dashboard", layout="wide")
-st.title("AuditorAgent – Recent Audits")
+import streamlit as st
+import sys
+import os
 
-url = st.text_input("Logs API URL", "http://localhost:8000/logs")
-if st.button("Refresh") or True:
-    try:
-        data = requests.get(url, timeout=5).json().get("items", [])
-    except Exception as e:
-        st.error(f"Failed: {e}")
-        st.stop()
+# Make sure we can import audit_service
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-    for item in data:
-        with st.container(border=True):
-            st.write(f"**Status:** {item.get('status')} | **At:** {item.get('ts','')}")
-            st.write("**Input:**", item.get("input",""))
-            res = item.get("result",{})
-            st.write(f"**Risk:** {res.get('risk_score')} | Issues: {', '.join(res.get('issues',[]))}")
-            if res.get("pii"):
-                st.write("**PII:**", res["pii"])
-            if res.get("safe_output"):
-                st.write("**Safe Output:**")
-                st.code(res["safe_output"])
+from audit_service.core import run_audit_input, run_audit_output
+from audit_service.services.portia_client import rewrite_with_portia
+
+
+st.set_page_config(page_title="AI Auditor Dashboard", layout="wide")
+
+st.title("🛡️ AI Auditor Dashboard")
+
+tabs = st.tabs(["👤 User Prompt Audit", "🤖 AI Output Audit"])
+
+
+# ===============================
+# TAB 1: USER PROMPT
+# ===============================
+with tabs[0]:
+    st.header("Audit User Prompt")
+
+    user_prompt = st.text_area("Enter user prompt:", height=150)
+
+    if st.button("Run User Prompt Audit", key="audit_input"):
+        if not user_prompt.strip():
+            st.warning("Please enter a user prompt first.")
+        else:
+            with st.spinner("Running input audit..."):
+                results = run_audit_input(user_prompt)
+
+            st.subheader("📋 Audit Results")
+            st.json(results)
+
+
+# ===============================
+# TAB 2: AI OUTPUT
+# ===============================
+with tabs[1]:
+    st.header("Audit AI Output")
+
+    ai_output = st.text_area("Enter AI output:", height=150)
+
+    if st.button("Run AI Output Audit", key="audit_output"):
+        if not ai_output.strip():
+            st.warning("Please enter AI output first.")
+        else:
+            with st.spinner("Running output audit..."):
+                results = run_audit_output(ai_output)
+
+            st.subheader("📋 Audit Results")
+            st.json(results)
+
+            # If flagged, rewrite with Portia
+            flagged_issues = [flag for flag, val in results.items() if val is True]
+            if flagged_issues:
+                with st.spinner("Rewriting with Portia..."):
+                    rewritten = rewrite_with_portia(ai_output, flagged_issues)
+
+                st.subheader("📝 Rewrite (Portia)")
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.markdown("**Before**")
+                    st.code(ai_output, language="markdown")
+
+                with col2:
+                    st.markdown("**After**")
+                    st.code(rewritten, language="markdown")

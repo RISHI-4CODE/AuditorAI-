@@ -4,7 +4,7 @@ Unified bridge to run selected ML audit models (PII, Toxicity/Bias, Hallucinatio
 
 from typing import Dict, Any, List
 from audit_service.services.pii import detect_pii
-from audit_service.services.toxicity import rate_toxicity_and_bias
+from audit_service.services.toxicity import analyze_toxicity as rate_toxicity_and_bias
 from audit_service.services.hallucination import HallucinationClassifier
 
 # load hallucination classifier once
@@ -38,14 +38,21 @@ def run_all_models(text: str, models: List[str] = None) -> Dict[str, Any]:
 
     # --- Toxicity/Bias ---
     if "toxicity" in models:
-        tox_score = rate_toxicity_and_bias(text)   # returns float 0–1
+        tox_result = rate_toxicity_and_bias(text)  # dict of category → score
+        tox_score = max(tox_result.values()) if tox_result else 0.0  # aggregate as max
+
         if tox_score >= 0.7:
             tox_flag = 2
         elif tox_score >= 0.4:
             tox_flag = 1
         else:
             tox_flag = 0
-        results["toxicity"] = {"score": tox_score, "flag": tox_flag}
+
+        results["toxicity"] = {
+            "flag": tox_flag,
+            "score": float(tox_score),   # keep numeric score
+            "details": tox_result        # optional: keep dict for debugging
+        }
 
     # --- Hallucination ---
     if "hallucination" in models:
