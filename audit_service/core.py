@@ -1,70 +1,91 @@
 # audit_service/core.py
 from typing import Dict, Any
-from audit_service.audit_checks.pii import detect_pii, sanitize_summary
-from audit_service.audit_checks.bias import detect_bias_toxicity, summarize_bias
-from audit_service.audit_checks.data_quality import detect_low_quality, quality_summary
-from audit_service.audit_checks.security import detect_security, summarize_security
-from audit_service.audit_checks.logistic import HarmfulClassifier
+from audit_service.services.audit_models_client import run_all_models
+from audit_service.services.portia_client import rewrite_with_portia
 
-# Initialize ML model once
-_classifier = HarmfulClassifier()
 
-def run_audit(response_text: str, context: str = "") -> Dict[str, Any]:
+def _decide_outcome(flags: Dict[str, int]) -> str:
+    """Derive overall outcome from per-model flags."""
+    if 2 in flags.values():
+        return "FAIL"
+    elif 1 in flags.values():
+        return "FLAG"
+    return "PASS"
+
+
+def run_audit_input(response_text: str, context: str = "") -> Dict[str, Any]:
     """
-    Run all audits + ML classifier and return a unified result.
+    Audit user input.
+    - Runs ONLY PII + Toxicity
+    - Flags: 0=PASS, 1=FLAG, 2=FAIL
+    - No rewrite
     """
-    findings: Dict[str, Any] = {}
-    reasons: list[str] = []
-    outcome = "PASS"
-    risk_score = 0
+    if not response_text.strip():
+        return {
+            "outcome": "FAIL",
+            "flags": {"pii": 2, "bias": 2, "hallucination": 0},
+            "original": response_text,
+            "cleaned": None,
+        }
 
-    # --- Security Audit ---
-    sec_findings = detect_security(response_text)
-    if sec_findings:
-        findings["security"] = sec_findings
-        reasons.append(summarize_security(sec_findings))
-        outcome = "FAIL"
-        risk_score += 50  # hard fail weights
+    results = run_all_models(response_text, models=["pii", "toxicity"])
 
-    # --- PII Audit ---
-    pii_findings = detect_pii(response_text)
-    if pii_findings:
-        findings["pii"] = pii_findings
-        reasons.append(sanitize_summary(pii_findings))
-        if outcome == "PASS":
-            outcome = "FLAG"
-        risk_score += 20
+    flags = {
+        "pii": 2 if results["pii"]["found"] else 0,
+        "bias": results["toxicity"]["flag"],
+        "hallucination": 0,  # not checked for user input
+    }
 
-    # --- Bias / Toxicity Audit ---
-    bias_findings = detect_bias_toxicity(response_text)
-    if bias_findings:
-        findings["bias"] = bias_findings
-        reasons.append(summarize_bias(bias_findings))
-        if outcome == "PASS":
-            outcome = "FLAG"
-        risk_score += 20
+    outcome = _decide_outcome(flags)
 
-    # --- Data Quality Audit ---
-    dq_findings = detect_low_quality(response_text, context)
-    if dq_findings:
-        findings["data_quality"] = dq_findings
-        reasons.append(quality_summary(dq_findings))
-        if outcome == "PASS":
-            outcome = "FLAG"
-        risk_score += 10
-
-    # --- ML Harmful Classifier ---
-    ml_score = _classifier.predict_proba(response_text)
-    risk_score = min(100, risk_score + int(ml_score * 100))
-    if ml_score > 0.7:
-        outcome = "FAIL"
-
-    # --- Final result ---
     return {
-        "outcome": outcome,  # PASS / FLAG / FAIL
-        "risk_score": risk_score,
-        "reasons": reasons,
-        "findings": findings,
+        "outcome": outcome,
+        "flags": flags,
         "original": response_text,
-        "cleaned": response_text if outcome == "PASS" else None,
+        "cleaned": None,
+    }
+
+
+def _calculate_flags(response_text: str) -> Dict[str, int]:
+    """
+    Run all audits (PII, Toxicity, Hallucination) and return flags.
+    Flags: 0=PASS, 1=FLAG, 2=FAIL
+    """
+    results = run_all_models(response_text, models=["pii", "toxicity", "hallucination"])
+
+    return {
+        "pii": 2 if results["pii"]["found"] else 0,
+        "bias": results["toxicity"]["flag"],
+        "hallucination": results["hallucination"]["flag"],
+    }
+
+
+def run_audit_output(response_text: str, context: str = "") -> Dict[str, Any]:
+    """
+    Audit AI output.
+    - Runs all models (PII, Toxicity, Hallucination)
+    - Flags remain per model
+    - Rewrites with Portia if outcome = FLAG/FAIL
+    """
+    if not response_text.strip():
+        return {
+            "outcome": "FAIL",
+            "flags": {"pii": 2, "bias": 2, "hallucination": 2},
+            "original": response_text,
+            "cleaned": "⚠️ Empty response",
+        }
+
+    flags = _calculate_flags(response_text)
+    outcome = _decide_outcome(flags)
+
+    safe_output = None
+    if outcome in ("FLAG", "FAIL"):
+        # ✅ Pass full flags dict now
+        safe_output = rewrite_with_portia(response_text, flags)
+
+    return {
+        "outcome": outcome,
+        "flags": flags,               # <-- transparent per-model flags
+        "original": response_text,
+        "cleaned": safe_output or response_text,
     }

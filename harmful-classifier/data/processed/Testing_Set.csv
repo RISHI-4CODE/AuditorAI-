@@ -1,0 +1,465 @@
+Name,Credit Card,Email,URL,Phone,Address,Company,SSN,Text,True Predictions
+Andrew Yoder,"VISA 16 digit
+Danielle Alexander
+4730099819249559 12/25
+CVC: 351
+",karensalazar@example.org,http://www.moore-orozco.com/,+91 1472004612,"901 Austin Well Apt. 454
+Cookport, WY 33980",Jackson-Guzman,575-74-7674,"We have conducted a thorough review of the tax compliance practices followed by Jackson-Guzman for the fiscal year ending March 31, 2023. Our examination included a detailed analysis of corporate tax returns, GST filings, and withholding tax submissions across all divisions. The review focused on ensuring compliance with the latest amendments in tax laws and regulations.
+
+    Corporate Tax Overview
+    The corporate tax computation for Jackson-Guzman was cross-verified against the financial statements audited by our internal team. The tax liability was calculated considering various deductions under section 80C, 80D, and other relevant sections of the Income Tax Act. The total taxable income stood at INR 500 Crores, with an effective tax rate of 25%.
+
+    Key points include:
+
+    Depreciation Deductions: Claimed as per the Income Tax Act, aligned with the rates prescribed under Schedule II. The assets located at 901 Austin Well Apt. 454
+Cookport, WY 33980 were correctly depreciated using the Written Down Value (WDV) method. The details of high-value assets have been corroborated with the asset register maintained at the corporate office.
+
+    Tax Credits: The company has utilized carry-forward losses from previous financial years to offset the current tax liability, reducing the net payable tax. The adjusted tax liability has been duly filed with the tax authorities.
+
+    Deductions: The deductions for contributions to the Employee Provident Fund (EPF) and Gratuity are in compliance with sections 80C and 80D. However, we noted a delay in the deposit of EPF contributions for some employees whose SSNs 575-74-7674 end with É??4567É??. This delay has been flagged, and a provision for potential interest and penalties has been recommended.
+
+    GST Compliance
+    The Goods and Services Tax (GST) compliance was reviewed in detail:
+
+    GST Payments: All GST payments were made on time except for minor discrepancies in the month of July. The shortfall of INR 2 Lakhs in GST payments for Jackson-GuzmanÉ??s manufacturing unit at 901 Austin Well Apt. 454
+Cookport, WY 33980 was rectified in subsequent months, with interest computed at 18% p.a.
+
+    Input Tax Credit (ITC): ITC claims were verified against the purchase invoices. The ITC related to capital goods purchased by the Research & Development (R&D) division were adequately accounted for. However, it was observed that certain invoices, particularly from vendors identified by the URL http://www.moore-orozco.com/, were not uploaded on the GST portal within the stipulated time, leading to an ITC reversal.
+
+    Reconciliation: A reconciliation of GSTR-3B with GSTR-2A was performed, revealing minor mismatches which have been communicated to the concerned department. The finance team has been instructed to follow up with vendors whose SSNs 575-74-7674 match records ending in '7890' to ensure timely filing.
+
+    Withholding Tax (TDS)
+    Withholding tax (TDS) was analyzed across various payments made during the year:
+
+    Salaries: TDS on salaries was deducted as per Section 192 of the Income Tax Act. Employee details, including SSNs 575-74-7674, were cross-checked with the HR records. A mismatch was found in the TDS calculations for employees whose SSNs end in É??1234É?? due to incorrect consideration of their investment declarations.
+
+    Professional Fees: TDS under Section 194J was reviewed, with a specific focus on payments exceeding INR 30,000. One such transaction involving a payment to Andrew Yoder was identified where TDS was not deducted. The legal team has been notified, and a rectification process has been initiated.
+
+    Rent Payments: TDS on rent payments was calculated correctly, but it was observed that rent agreements for premises at 901 Austin Well Apt. 454
+Cookport, WY 33980 lacked proper documentation. The agreements are currently being reviewed to ensure compliance.
+
+    Audit Recommendations
+    Based on our review, we recommend the following actions to mitigate tax risks:
+
+    Timely Payment of Taxes: Ensure that all taxes, including GST and TDS, are paid within the due dates to avoid interest and penalties. The finance team should regularly review the payment schedules, particularly for transactions involving large sums.
+
+    Documentation: Improve the documentation process, especially for transactions involving high-value assets and payments. Ensure that all contracts and agreements are updated and compliant with tax regulations.
+
+    Employee Training: Conduct training sessions for the finance and HR teams on the latest tax amendments and compliance requirements. Emphasize the importance of accurate TDS calculations and timely tax payments.
+
+    Automation of Processes: Consider implementing tax compliance software to automate GST reconciliation, TDS computation, and other tax-related processes. This will reduce manual errors and ensure adherence to compliance timelines.
+
+    Conclusion
+    We have attached a detailed report with the findings and recommendations. The finance team at Jackson-Guzman should review this report and initiate the necessary actions. For any queries or further clarifications, please contact Andrew Yoder at karensalazar@example.org or +91 1472004612. All physical correspondence can be directed to our office at 901 Austin Well Apt. 454
+Cookport, WY 33980.
+
+    This review reflects our commitment to ensuring that Jackson-Guzman remains compliant with all tax regulations. We appreciate your cooperation during the audit process and look forward to your prompt action on the recommendations.
+
+    ","[(3482, 3494, 'name'), (5162, 5174, 'name'), (5178, 5202, 'email'), (2462, 2490, 'url'), (5206, 5220, 'phone'), (926, 969, 'address'), (2047, 2090, 'address'), (3744, 3787, 'address'), (5283, 5326, 'address'), (80, 94, 'company'), (440, 454, 'company'), (2008, 2022, 'company'), (5027, 5041, 'company'), (5386, 5400, 'company'), (1627, 1638, 'ssn'), (2820, 2831, 'ssn'), (3119, 3130, 'ssn')]"
+David Owen,"VISA 16 digit
+Melissa Dunn
+4618265793875936 12/26
+CVC: 564
+",dixonstephen@example.org,http://www.mejia.net/,+91 3663803403,"41458 Wilkins Pines
+West Erin, SC 45092",Reilly-Camacho,048-59-6922,"Dear David Owen, your recent transaction with Reilly-Camacho using credit card VISA 16 digit
+Melissa Dunn
+4618265793875936 12/26
+CVC: 564
+ was successful. Please contact us at +91 3663803403 if you have any questions.","[(5, 15, 'name'), (79, 138, 'credit_card'), (176, 190, 'phone'), (46, 60, 'company')]"
+Jonathon Roth,"Maestro
+April West
+503881435914 08/34
+CVV: 862
+",gordonlisa@example.net,https://www.horne.com/,+68 9991225428,"32836 Anthony Park Suite 592
+Pollardton, IL 96104","Hogan, Smith and Galloway",156-64-9143,"To The Members of Hogan, Smith and Galloway,
+    Report on the audit of the Standalone Financial Statements
+    Key Audit Matters AuditorsÉ?? response to Key Audit Matters
+    Property, Plant & Equipment and Intangible Assets
+    There are areas where management judgement impacts the carrying value of property, plant and equipment, intangible assets and their respective depreciation/amortisation rates. These include the decision to capitalize or expense costs; the annual asset life review; the timeliness of the capitalization of assets and the use of management assumptions and estimates for the determination or the measurement and recognition criteria for assets retired from active use. Due to the materiality in the context of the Balance Sheet of the Company and the level of judgement and estimates required, we consider this to be an area of significance.
+    We assessed the controls in place over the fixed asset cycle, evaluated the appropriateness of the capitalization process, performed tests of details on costs capitalized, the timeliness of the capitalization of the assets and the de-recognition criteria for assets retired from active use. In performing these procedures, we reviewed the judgements made by management including the nature of underlying costs capitalized; determination of realizable value of the assets retired from active use; the appropriateness of asset lives applied in the calculation of depreciation/amortization; the useful lives of assets prescribed in Schedule II to the Act and the useful lives of certain assets as per the technical assessment of the management. We observed that the management has regularly reviewed the aforesaid judgements and there are no material changes.
+    Opinion
+    We have audited the accompanying standalone financial statements of Hogan, Smith and Galloway, which comprise the Balance Sheet as at March 31, 2023, the Statement of Profit and Loss (including Other Comprehensive Income), the Statement of Changes in Equity and the Statement of Cash Flows for the year then ended and notes to the standalone financial statements including a summary of significant accounting policies and other explanatory information in which are incorporated the financial statements for the year ended on that date audited by the Branch Auditors of the CompanyÉ??s one Branch, namely Research & Development (R&D) division situated at 32836 Anthony Park Suite 592
+Pollardton, IL 96104. In our opinion and to the best of our information and according to the explanations given to us, the aforesaid standalone financial statements give the information required by the Companies Act, 2013 (the É??ActÉ?ù) in the manner so required and give a true and fair view in conformity with Indian Accounting Standards specified under section 133 of the Act read with the Companies (Indian Accounting Standards) Rules 2015, as amended and other accounting principles generally accepted in India, of the state of affairs of the Company as at March 31, 2023, and total comprehensive income (comprising of profit and other comprehensive income), changes in equity and its cash flows for the year ended on that date.
+    Basis for opinion
+    We conducted our audit of the standalone financial statements in accordance with the Standards on Auditing (SAs) specified under section 143(10) of the Act. Our responsibilities under those Standards are further described in the AuditorsÉ?? Responsibilities for the Audit of the standalone financial statements section of our report. We are independent of the Company in accordance with the Code of Ethics issued by the Institute of Chartered Accountants of India (É??ICAIÉ?ù), together with the ethical requirements that are relevant to our audit of the standalone financial statements under the provisions of the Act and ""the Rules"" thereunder, and we have fulfilled our other ethical responsibilities in accordance with these requirements and the ICAIÉ??s Code of Ethics. We believe that the audit evidence we have obtained is sufficient and appropriate to provide a basis for our opinion on the standalone financial statements.
+    Key audit matters
+    Key audit matters are those matters that, in our professional judgment, were of most significance in our audit of the standalone financial statements of the current period. These matters were addressed in the context of our audit of the standalone financial statements as a whole, and in forming our opinion thereon, and we do not provide a separate opinion on these matters. We have determined the matters described below to be the key audit matters to be communicated in our report.","[(2396, 2445, 'address'), (18, 43, 'company'), (1812, 1837, 'company')]"
+Bryce Willis,"VISA 16 digit
+Joseph Bentley
+4960389176757513 06/31
+CVC: 456
+",amy47@example.com,http://benson.net/,+91 4511950664,"729 Sims Extensions Apt. 382
+Lake Brianshire, MO 17118","Scott, Thompson and Schaefer",283-43-8647,"Following the annual compliance schedule, a thorough evaluation of the internal controls within Scott, Thompson and Schaefer was conducted. This document outlines the methodologies adopted, key findings, and recommendations for strengthening internal processes and ensuring regulatory compliance. The objective of this review was to assess the effectiveness of the existing controls and identify potential areas for enhancement.
+    The review process included both quantitative and qualitative assessments, leveraging advanced data analytics tools and direct observation techniques. The methodology encompassed:
+    Risk Assessment:
+    Identification and prioritization of risk areas within the financial and operational domains
+    Deployment of risk management frameworks to evaluate the potential impact and likelihood of identified risks
+    Control Testing:
+    Execution of control tests to verify the functionality and effectiveness of control measures
+    Analysis of control gaps and deficiencies in critical areas
+    Stakeholder Interviews:
+    Conducting interviews with key personnel to gather insights on control environments and operational challenges
+    Evaluation of the awareness and understanding of control policies among staff
+    Several critical findings emerged from the review, indicating areas that require immediate attention and corrective actions:
+    Financial Control Deficiencies:
+    Inconsistent application of accounting policies leading to discrepancies in financial reporting
+    Lack of adequate documentation for significant financial transactions
+    Operational Control Gaps:
+    Inefficiencies in the procurement process resulting in unauthorized purchases
+    Insufficient monitoring of inventory levels causing stock variances
+    Compliance Shortcomings:
+    Non-compliance with internal audit recommendations from previous assessments
+    Delays in regulatory filings and updates
+    To address the identified deficiencies and enhance the control environment, the following actions are recommended:
+    Financial Controls:
+    Standardization of accounting procedures across all departments
+    Complementation of a centralized documentation system for financial transactions
+    Operational Controls:
+    Revision of the procurement policy to include stricter approval processes
+    Regular inventory audits to ensure accuracy and accountability
+    Compliance Enhancements:
+    Establishment of a compliance oversight committee to monitor adherence to audit recommendations
+    Timely updating and submission of regulatory documents
+    The review highlights the necessity for continuous improvement in internal controls to mitigate risks and ensure compliance. The implementation of the recommended actions will significantly enhance the operational efficiency and financial integrity of Scott, Thompson and Schaefer
+    Attached to this document are detailed reports and evidence supporting the findings and recommendations. The Internal Compliance Unit is available for further discussions and clarifications
+    For any questions or clarifications regarding this document, please contact the Internal Compliance Unit at amy47@example.com or +91 4511950664. Physical correspondence can be directed to 729 Sims Extensions Apt. 382
+Lake Brianshire, MO 17118. Please also include the last four digits of your SSN: 283-43-8647.
+    This document contains proprietary information of Scott, Thompson and Schaefer. Unauthorized use or disclosure of the contents is strictly prohibited. All related communications should be directed to authorized personnel only.
+    Please acknowledge receipt of this document by providing the last four digits of your VISA 16 digit
+Joseph Bentley
+4960389176757513 06/31
+CVC: 456
+, your full name Bryce Willis, and the associated http://benson.net/ to our secure email. This step is crucial for maintaining the security and confidentiality of our internal review process.","[(3777, 3789, 'name'), (3699, 3760, 'credit_card'), (3175, 3192, 'email'), (3810, 3828, 'url'), (3196, 3210, 'phone'), (3255, 3309, 'address'), (96, 124, 'company'), (2840, 2868, 'company'), (3432, 3460, 'company'), (3365, 3376, 'ssn')]"
+Brian Maynard,"JCB 16 digit
+Brenda Stephens
+3599324622113244 11/29
+CVC: 549
+",moorevincent@example.org,https://www.perez-kemp.info/,+66 8518827147,"3792 Carlos Center
+Cooperchester, AL 36727","Anderson, Hill and Coleman",461-39-6094,"The report for Anderson, Hill and Coleman located at 3792 Carlos Center
+Cooperchester, AL 36727 was submitted successfully. For further inquiries, reach out at moorevincent@example.org.","[(160, 184, 'email'), (53, 95, 'address'), (15, 41, 'company')]"
+Melissa Bullock,"VISA 16 digit
+Yolanda Moore
+4791426436823571 08/27
+CVC: 328
+",heather01@example.org,https://larson.com/,+95 5309404752,"18056 Gregory Well Suite 659
+East Aliciashire, NE 90956","Thompson, Tran and Scott",130-67-8658,The SSN 130-67-8658 associated with your account has been verified. Visit https://larson.com/ for more details.,"[(74, 93, 'url'), (8, 19, 'ssn')]"
+Ryan Ortiz,"JCB 16 digit
+Brandon Mullins
+3536895160092771 04/34
+CVC: 157
+",jason52@example.org,http://rodgers.com/,+56 8366018544,"714 Kane Forks Apt. 893
+Port Richardport, PW 24345",Tyler LLC,299-55-3712,"To Whom It May Concern,
+
+    This letter is to confirm that Ryan Ortiz, holding Social Security Number (SSN) 299-55-3712, residing at 714 Kane Forks Apt. 893
+Port Richardport, PW 24345, has filed their tax returns for the fiscal year ending March 31, 2023. The tax filings have been processed under the IRS Tax Identification Number (TIN) associated with the company Tyler LLC.
+
+    The individualÉ??s total income for the fiscal year amounted to $125,000, including salaries, bonuses, and other forms of income. The detailed breakdown of the income sources is as follows:
+
+    1. Salary from Tyler LLC: $100,000
+    2. Bonus and Incentives: $15,000
+    3. Other Income (Investments, Dividends, etc.): $10,000
+
+    The total federal tax liability for the year is $25,000, which has been fully paid by the taxpayer. The tax payments were made using the credit card ending in JCB 16 digit
+Brandon Mullins
+3536895160092771 04/34
+CVC: 157
+ and were processed through the IRS online payment portal. Please note that this tax statement is generated in accordance with the income tax laws applicable in the United States.
+
+    For any queries or further clarifications, you may contact Ryan Ortiz at jason52@example.org or +56 8366018544. Additional documents supporting the tax filings can be requested by visiting http://rodgers.com/.
+
+    This document is confidential and should be handled in accordance with data protection regulations to prevent unauthorized access to sensitive information.
+    ","[(60, 70, 'name'), (1177, 1187, 'name'), (872, 933, 'credit_card'), (1191, 1210, 'email'), (1307, 1326, 'url'), (1214, 1228, 'phone'), (134, 184, 'address'), (367, 376, 'company'), (591, 600, 'company'), (109, 120, 'ssn')]"
+Max Murray,"JCB 16 digit
+Rebecca Snyder
+3581841004827083 05/27
+CVC: 757
+",stephanielong@example.com,http://www.crawford-cuevas.com/,+65 9282270124,"1831 Ashley Mountains Suite 943
+West Stephanieton, CA 76130","Wilcox, Kim and Johnson",899-02-4695,"Subject: Annual Tax Filing Confirmation for Fiscal Year 2023
+
+    Dear Max Murray,
+
+    We are pleased to inform you that your tax return for the fiscal year ending March 31, 2023, has been successfully filed and processed by Wilcox, Kim and Johnson. The filing was completed using your Social Security Number (SSN) 899-02-4695, and the confirmation number is associated with the TIN 899-02-4695 registered under Wilcox, Kim and Johnson.
+
+    Your gross income for the year was reported as $150,000, which includes:
+
+    - Employment Income from Wilcox, Kim and Johnson: $120,000
+    - Capital Gains: $20,000
+    - Interest and Dividends: $10,000
+
+    The total tax due for the fiscal year was calculated at $30,000. This amount has been paid in full through a payment transaction completed on March 28, 2024, using the credit card ending in JCB 16 digit
+Rebecca Snyder
+3581841004827083 05/27
+CVC: 757
+. Your tax records indicate that you are eligible for a tax refund of $2,000, which will be credited to your bank account on file.
+
+    Please ensure that all records related to this tax filing, including the payment receipt, are stored securely. Should you require any further assistance or have questions about your tax return, please do not hesitate to contact our customer service department at stephanielong@example.com or by calling +65 9282270124. You may also visit our website http://www.crawford-cuevas.com/ for more information.
+
+    This statement is intended for the use of Max Murray and contains sensitive information that must be kept confidential. Any unauthorized use, dissemination, or copying of this document is strictly prohibited.
+    ","[(71, 81, 'name'), (1489, 1499, 'name'), (842, 902, 'credit_card'), (1301, 1326, 'email'), (1388, 1419, 'url'), (1341, 1355, 'phone'), (226, 249, 'company'), (413, 436, 'company'), (546, 569, 'company'), (316, 327, 'ssn'), (384, 395, 'ssn')]"
+Kayla Griffin,"Discover
+Melinda Ellison
+6538604055836180 12/30
+CVC: 603
+",vanessaryan@example.com,http://robinson-scott.com/,+91 5196651541,"13481 Decker Ferry Suite 705
+Kristinamouth, MD 42208","Hogan, Phillips and Smith",840-01-1523,"To: Kayla Griffin
+    SSN: 840-01-1523
+    TIN: 840-01-1523
+    Address: 13481 Decker Ferry Suite 705
+Kristinamouth, MD 42208
+
+    Subject: Confirmation of Tax Filing for FY 2023
+
+    Dear Kayla Griffin,
+
+    Your tax filing for the fiscal year ending March 31, 2023, has been successfully processed. The filing was conducted using your TIN 840-01-1523 registered under the IRS. Your total income for the fiscal year was reported as $175,000, comprising the following sources:
+
+    1. Salary from Hogan, Phillips and Smith: $140,000
+    2. Investment Income: $25,000
+    3. Other Earnings: $10,000
+
+    The total tax payable for this fiscal year was calculated at $35,000. The payment was made on March 25, 2024, using the credit card associated with the number ending in Discover
+Melinda Ellison
+6538604055836180 12/30
+CVC: 603
+. Please retain this statement as proof of payment and tax compliance.
+
+    Should you need to amend any details or have inquiries, you can contact us at vanessaryan@example.com or by phone at +91 5196651541. Additional information and related services can be accessed through http://robinson-scott.com/.
+
+    Please note that this document contains confidential information, and unauthorized access or distribution is strictly prohibited. Keep this document in a secure location.
+    ","[(4, 17, 'name'), (189, 202, 'name'), (772, 829, 'credit_card'), (983, 1006, 'email'), (1106, 1132, 'url'), (1022, 1036, 'phone'), (73, 125, 'address'), (497, 522, 'company'), (27, 38, 'ssn'), (48, 59, 'ssn'), (341, 352, 'ssn')]"
+Jenny Gilbert,"Maestro
+Bradley Saunders
+639052387128 10/32
+CVV: 331
+",yespinoza@example.org,https://cannon.biz/,+91 8840920617,"Unit 3386 Box 5825
+DPO AE 43903",Miller Ltd,315-68-8485,"During the audit of the financial statements for Miller Ltd, it was observed that Mr Jenny Gilbert, the Chief Financial Officer, approved the purchase of assets worth $500,000 on Unit 3386 Box 5825
+DPO AE 43903 The payment was processed through the credit card ending in Maestro
+Bradley Saunders
+639052387128 10/32
+CVV: 331
+ Mr Jenny Gilbert's Social Security Number (SSN) is 315-68-8485 For any clarifications, please reach out to Mr Jenny Gilbert at yespinoza@exampleorg or contact him directly at +91 8840920617 Further details can be accessed at https://cannonbiz/","[(85, 98, 'name'), (328, 341, 'name'), (435, 448, 'name'), (271, 324, 'credit_card'), (500, 514, 'phone'), (179, 210, 'address'), (49, 59, 'company'), (376, 387, 'ssn')]"
+Kathy Hutchinson,"VISA 13 digit
+Monique James
+4926423785049 11/24
+CVC: 388
+",heathersmith@example.org,http://wilkinson.com/,+211 9612363682,"75395 Anthony Pines
+South April, TX 37507","Williams, Baker and Hunter",899-24-4737,"Customer Kathy Hutchinson from Williams, Baker and Hunter, located at 75395 Anthony Pines
+South April, TX 37507, has submitted feedback regarding the recent transaction involving their credit card VISA 13 digit
+Monique James
+4926423785049 11/24
+CVC: 388
+ They can be reached at heathersmith@exampleorg or +211 9612363682 for further discussions The customer's Social Security Number (SSN) on file is 899-24-4737 The feedback was originally submitted through our website at http://wilkinsoncom/.","[(9, 25, 'name'), (197, 254, 'credit_card'), (305, 320, 'phone'), (70, 111, 'address'), (31, 57, 'company'), (400, 411, 'ssn')]"
+Andrea Ruiz,"Discover
+Joe Villegas
+6011001713881318 02/30
+CVC: 631
+",reyesdeborah@example.com,http://hawkins-wilcox.info/,+91 6289095696,"897 Flores Burgs Suite 750
+North Rachelbury, FM 34563",Maddox Group,577-02-7219,"This is a confirmation that the payment for the invoice number INV-409876535422 from Maddox Group has been successfully processed. The payment was made using the credit card ending in Discover
+Joe Villegas
+6011001713881318 02/30
+CVC: 631
+ by Andrea Ruiz. The billing address on file is 897 Flores Burgs Suite 750
+North Rachelbury, FM 34563. The Social Security Number (SSN) for Andrea Ruiz is 577-02-7219. Should you have any inquiries, you may contact Andrea Ruiz via email at reyesdeborah@example.com or call +91 6289095696. For more information, visit http://hawkins-wilcox.info/","[(242, 253, 'name'), (378, 389, 'name'), (453, 464, 'name'), (184, 238, 'credit_card'), (478, 502, 'email'), (555, 582, 'url'), (511, 525, 'phone'), (286, 339, 'address'), (85, 97, 'company'), (393, 404, 'ssn')]"
+Ricardo Perez,"VISA 16 digit
+Manuel Hernandez
+4098912674666855 01/34
+CVC: 631
+",crawfordchristian@example.net,http://sweeney.com/,+91 6034497453,"0851 Eileen Spring Suite 115
+Lake Shannonport, MI 46578",Rodriguez-Vasquez,564-69-8794,"We regret to inform you that a security breach was detected on Rodriguez-Vasquez's systems, which may have exposed your personal information, including your name (Ricardo Perez), email (crawfordchristian@example.net), phone number (+91 6034497453), and Social Security Number (SSN) (564-69-8794). The breach was traced back to unauthorized access from IP address 192.0.45. If you notice any suspicious activity on your credit card ending in VISA 16 digit
+Manuel Hernandez
+4098912674666855 01/34
+CVC: 631
+, please contact us immediately. You can also check for updates on our security measures at http://sweeney.com/. The compromised data was stored at our facility located at 0851 Eileen Spring Suite 115
+Lake Shannonport, MI 46578.","[(163, 176, 'name'), (441, 504, 'credit_card'), (186, 215, 'email'), (596, 615, 'url'), (232, 246, 'phone'), (676, 731, 'address'), (63, 80, 'company'), (283, 294, 'ssn')]"
+Steven Patton,"VISA 16 digit
+Denise Young
+4919315863789503 09/24
+CVC: 164
+",justin18@example.org,http://white.org/,+68 7123796774,"USNS Orr
+FPO AA 39270","Gordon, Ford and Cunningham",222-43-0194,"Dear Steven Patton, thank you for creating a new account with Gordon, Ford and Cunningham Your registered email is justin18@exampleorg, your contact number is +68 7123796774, and your Social Security Number (SSN) is 222-43-0194. The account was set up using the billing address USNS Orr
+FPO AA 39270, and the primary credit card linked to the account ends in VISA 16 digit
+Denise Young
+4919315863789503 09/24
+CVC: 164
+. Please visit http://white.org/ to verify your account and update any personal details. If you need assistance, contact our support team","[(5, 18, 'name'), (359, 418, 'credit_card'), (433, 450, 'url'), (159, 173, 'phone'), (278, 299, 'address'), (62, 89, 'company'), (216, 227, 'ssn')]"
+Richard Diaz,"Discover
+Michael Stout
+6560045837280845 03/31
+CVC: 447
+",sarahreyes@example.com,http://www.gross.com/,+91 4097986280,"068 Sherry Parkway
+Jacquelineburgh, FL 45032","Thompson, Gallagher and Richmond",222-54-0397,"This Service Contract between Thompson, Gallagher and Richmond and Richard Diaz was entered at 068 Sherry Parkway
+Jacquelineburgh, FL 45032. The contract stipulates that all payments will be processed through the credit card provided by Richard Diaz, ending in Discover
+Michael Stout
+6560045837280845 03/31
+CVC: 447
+. Richard Diaz's Social Security Number (SSN) is 222-54-0397. For further reference, correspondence will be sent to sarahreyes@example.com, and all communications will be conducted via +91 4097986280. The full contract details are available online at http://www.gross.com/.","[(67, 79, 'name'), (237, 249, 'name'), (318, 330, 'name'), (261, 316, 'credit_card'), (432, 454, 'email'), (567, 588, 'url'), (501, 515, 'phone'), (95, 139, 'address'), (30, 62, 'company'), (365, 376, 'ssn')]"
+Michael Graham,"Maestro
+Katherine Oliver
+503801410633 01/25
+CVV: 239
+",gpacheco@example.net,http://www.hernandez.org/,+28 5619411916,"66614 Caroline Rapid Apt. 513
+Meganmouth, IA 77039","Black, Fry and Williams",387-31-3013,"Dear Michael Graham, we have received your loan application at Black, Fry and Williams, and it is currently under review. Your application, submitted on 23/09/2008, includes personal details such as your home address (66614 Caroline Rapid Apt. 513
+Meganmouth, IA 77039), email (gpacheco@example.net), contact number (+28 5619411916), and Social Security Number (SSN) (387-31-3013). The loan amount requested will be credited to your account associated with the credit card ending in Maestro
+Katherine Oliver
+503801410633 01/25
+CVV: 239
+. Please check http://www.hernandez.org/ for real-time updates on your application status.","[(5, 19, 'name'), (483, 536, 'credit_card'), (278, 298, 'email'), (551, 576, 'url'), (317, 331, 'phone'), (218, 268, 'address'), (63, 86, 'company'), (368, 379, 'ssn')]"
+Jennifer Johnson,"Diners Club / Carte Blanche
+William Price
+30094229667446 02/27
+CVC: 350
+",cnunez@example.net,https://mann.com/,+641 9362489101,"07808 Matthews Estates
+South Josephbury, PW 36341",Oconnor PLC,379-13-9299,"Insurance claim #CLM9076109877 has been initiated by Jennifer Johnson for Oconnor PLC. The claim, associated with the address 07808 Matthews Estates
+South Josephbury, PW 36341, will be processed through the credit card ending in Diners Club / Carte Blanche
+William Price
+30094229667446 02/27
+CVC: 350
+. Our claims department may reach out to you at +641 9362489101 or via email at cnunez@example.net for additional information. Jennifer Johnson's Social Security Number (SSN) is 379-13-9299. Claim details are available online at https://mann.com/.","[(53, 69, 'name'), (428, 444, 'name'), (229, 301, 'credit_card'), (381, 399, 'email'), (530, 547, 'url'), (349, 364, 'phone'), (126, 175, 'address'), (74, 85, 'company'), (479, 490, 'ssn')]"
+Madison Brooks,"Mastercard
+Megan Lang
+2390953697788887 02/27
+CVV: 871
+",kstevens@example.com,http://www.johnson.com/,+126 5405174108,"94967 Vasquez Skyway
+Lake Erikaville, CA 12325",Meyer-Cook,422-68-5703,"We are pleased to welcome Madison Brooks to Meyer-Cook As part of the onboarding process, we have registered your personal details, including your residential address (94967 Vasquez Skyway
+Lake Erikaville, CA 12325), contact number (+126 5405174108), email (kstevens@example.com), and Social Security Number (SSN) (422-68-5703). Your corporate credit card, ending in Mastercard
+Megan Lang
+2390953697788887 02/27
+CVV: 871
+, will be issued within the next five business days. For company policies and other relevant information, please visit http://www.johnson.com/.","[(26, 40, 'name'), (367, 421, 'credit_card'), (258, 278, 'email'), (540, 563, 'url'), (233, 248, 'phone'), (168, 214, 'address'), (44, 54, 'company'), (315, 326, 'ssn')]"
+Joseph Larson,"Discover
+Jack Elliott
+6011554013420492 08/30
+CVC: 728
+",robertrobertson@example.net,http://www.bautista.com/,+80 5141490715,"6315 Sandoval Road
+New Alexanderside, NE 83182","Richardson, Smith and Williams",519-29-5417,"Dear Joseph Larson, your subscription with Richardson, Smith and Williams is up for renewal. The subscription associated with the email robertrobertson@example.net, phone number +80 5141490715, and billing address 6315 Sandoval Road
+New Alexanderside, NE 83182 will automatically renew using your credit card ending in Discover
+Jack Elliott
+6011554013420492 08/30
+CVC: 728
+. Your Social Security Number (SSN) on file is 519-29-5417. To manage your subscription or for more details, please visit http://www.bautista.com/. If you need to update your payment information, contact our support team.During the routine financial audit for Richardson, Smith and Williams, it was discovered that Mr. Joseph Larson, serving as the CFO, authorized the acquisition of assets totaling $500,000. The transaction occurred at 6315 Sandoval Road
+New Alexanderside, NE 83182 and was paid for using the credit card ending in Discover
+Jack Elliott
+6011554013420492 08/30
+CVC: 728
+. Mr. Joseph Larson is identified by the Social Security Number (SSN) 519-29-5417. For additional details, Mr. Joseph Larson can be contacted at robertrobertson@example.net or via phone at +80 5141490715. Further documentation can be found on our website at http://www.bautista.com/","[(5, 18, 'name'), (692, 705, 'name'), (967, 980, 'name'), (1072, 1085, 'name'), (319, 373, 'credit_card'), (907, 961, 'credit_card'), (136, 163, 'email'), (1106, 1133, 'email'), (495, 519, 'url'), (1219, 1243, 'url'), (178, 192, 'phone'), (1150, 1164, 'phone'), (214, 260, 'address'), (811, 857, 'address'), (43, 73, 'company'), (633, 663, 'company'), (420, 431, 'ssn'), (1031, 1042, 'ssn')]"
+Kelly Matthews,"Maestro
+Patricia Jimenez
+060448755854 07/27
+CVV: 450
+",marissa10@example.com,https://rios-santiago.com/,+318 8989212289,"Unit 4795 Box 2012
+DPO AA 70258","Henson, Hester and Cooper",099-59-5616,"Customer feedback has been received from Kelly Matthews representing Henson, Hester and Cooper, located at Unit 4795 Box 2012
+DPO AA 70258. The feedback pertains to a transaction processed through their credit card ending in Maestro
+Patricia Jimenez
+060448755854 07/27
+CVV: 450
+. You can reach out to Kelly Matthews for more information at marissa10@example.com or +318 8989212289. The SSN associated with the customer's profile is 099-59-5616. The feedback submission was completed through our online portal at https://rios-santiago.com/.","[(41, 55, 'name'), (301, 315, 'name'), (225, 278, 'credit_card'), (340, 361, 'email'), (512, 538, 'url'), (365, 380, 'phone'), (107, 138, 'address'), (69, 94, 'company'), (432, 443, 'ssn')]"
+Brandy Sandoval,"Mastercard
+Darrell Wiley
+2720655660716917 10/25
+CVV: 454
+",ryan09@example.net,http://mendoza.com/,+30 3873936001,"1534 Monica Union Suite 648
+Lake Erinland, IA 16557",Harris PLC,529-19-1980,"We hereby confirm that the payment for invoice INV-12345 issued by Harris PLC has been successfully completed. The payment was facilitated by Brandy Sandoval using the credit card ending in Mastercard
+Darrell Wiley
+2720655660716917 10/25
+CVV: 454
+. The billing address linked to the payment is 1534 Monica Union Suite 648
+Lake Erinland, IA 16557. The associated SSN for Brandy Sandoval is 529-19-1980. For inquiries, please contact Brandy Sandoval at ryan09@example.net or by phone at +30 3873936001. Visit http://mendoza.com/ for further details","[(142, 157, 'name'), (370, 385, 'name'), (432, 447, 'name'), (190, 247, 'credit_card'), (451, 469, 'email'), (507, 526, 'url'), (485, 499, 'phone'), (294, 345, 'address'), (67, 77, 'company'), (389, 400, 'ssn')]"
+Carolyn Ruiz,"Mastercard
+Amanda Flynn
+2276957228716878 04/33
+CVV: 714
+",alexanderschmidt@example.com,https://miller.net/,+91 6691190882,"08892 Luke Crossroad Apt. 281
+Andrewfort, TX 45216","Dean, Hamilton and Walker",243-55-9033,"A security incident has been detected on the systems of Dean, Hamilton and Walker, potentially compromising your personal data, including your name (Carolyn Ruiz), email (alexanderschmidt@examplecom), phone number (+91 6691190882), and SSN (243-55-9033) The breach was linked to an unauthorized access attempt traced to IP address If you observe any suspicious activity on your credit card ending in Mastercard
+Amanda Flynn
+2276957228716878 04/33
+CVV: 714
+, notify us immediately. Updates on the situation will be posted at https://miller.net/. The compromised data was stored at our facility located at 08892 Luke Crossroad Apt. 281
+Andrewfort, TX 45216","[(149, 161, 'name'), (400, 456, 'credit_card'), (524, 543, 'url'), (215, 229, 'phone'), (604, 654, 'address'), (56, 81, 'company'), (241, 252, 'ssn')]"
+Carl Jackson,"JCB 16 digit
+Andrea Smith
+3598200262433798 03/26
+CVC: 896
+",aaronjones@example.net,https://www.bowman.com/,+553 8087271697,"8134 Herrera Manor
+South Jeffery, VI 01294","Martinez, Lowe and Lewis",891-78-8765,"Dear Carl Jackson, we are pleased to confirm the creation of your new account with Martinez, Lowe and Lewis. Your registered email address is aaronjones@example.net, and your contact number is +553 8087271697. The account was set up using your billing address 8134 Herrera Manor
+South Jeffery, VI 01294 and is linked to a credit card ending in JCB 16 digit
+Andrea Smith
+3598200262433798 03/26
+CVC: 896
+. Your Social Security Number (SSN) is 891-78-8765. Please visit https://www.bowman.com/ to verify your account and update any personal information. If you require assistance, our support team is available to help.","[(5, 17, 'name'), (344, 402, 'credit_card'), (142, 164, 'email'), (467, 490, 'url'), (193, 208, 'phone'), (260, 302, 'address'), (83, 107, 'company'), (441, 452, 'ssn')]"
+Andrew Norris,"American Express
+Joshua Hester
+348812153559223 08/26
+CID: 3040
+",townsendrobert@example.com,https://massey-bass.com/,+91 4446971930,"PSC 1413, Box 7885
+APO AP 68525",Schneider Inc,279-79-3576,"This agreement between Schneider Inc and Andrew Norris was formalized at PSC 1413, Box 7885
+APO AP 68525. Under the terms of the contract, all payments will be processed via the credit card provided by Andrew Norris, ending in American Express
+Joshua Hester
+348812153559223 08/26
+CID: 3040
+. Andrew Norris's Social Security Number (SSN) is 279-79-3576. All correspondence will be directed to townsendrobert@example.com, and further communication can be made via +91 4446971930. Full contract details are accessible online at https://massey-bass.com/","[(41, 54, 'name'), (202, 215, 'name'), (292, 305, 'name'), (227, 290, 'credit_card'), (392, 418, 'email'), (525, 549, 'url'), (462, 476, 'phone'), (73, 104, 'address'), (23, 36, 'company'), (340, 351, 'ssn')]"
+Christopher Johnston,"American Express
+Joe Reynolds
+377364258317705 11/32
+CID: 7828
+",floresgina@example.org,http://martinez-moore.info/,+06 8963056165,"13465 Douglas Tunnel Suite 611
+North Maria, TX 99739",Alexander-Spencer,323-22-2440,"Dear Christopher Johnston, your recent loan application at Alexander-Spencer is currently under review The application, submitted on 09/12/2020, includes your home address (13465 Douglas Tunnel Suite 611
+North Maria, TX 99739), email (floresgina@exampleorg), phone number (+06 8963056165), and SSN (323-22-2440). The requested loan amount will be credited to the account linked to the credit card ending in American Express
+Joe Reynolds
+377364258317705 11/32
+CID: 7828
+. Check http://martinez-moore.info/ for real-time updates on your application status","[(5, 25, 'name'), (407, 469, 'credit_card'), (477, 504, 'url'), (273, 287, 'phone'), (173, 225, 'address'), (59, 76, 'company'), (299, 310, 'ssn')]"
+Michelle Robinson,"American Express
+Mary Yates
+372653513734877 07/34
+CID: 2647
+",jesusrodriguez@example.org,https://gordon.com/,+877 7653081916,"7363 Mahoney Manor
+Parksborough, AL 43740",Hernandez-Hill,874-38-8437,"Insurance claim #CLM0098 has been initiated by Michelle Robinson with Hernandez-Hill. The claim, related to the address 7363 Mahoney Manor
+Parksborough, AL 43740, will be processed using the credit card ending in American Express
+Mary Yates
+372653513734877 07/34
+CID: 2647
+. Our claims department may contact you at +877 7653081916 or jesusrodriguez@example.org for further details. The SSN associated with Michelle Robinson is 874-38-8437. Claim details can be accessed at https://gordon.com/.","[(47, 64, 'name'), (407, 424, 'name'), (213, 273, 'credit_card'), (335, 361, 'email'), (474, 493, 'url'), (316, 331, 'phone'), (120, 161, 'address'), (70, 84, 'company'), (428, 439, 'ssn')]"
+James Hughes,"Mastercard
+Tyler Leonard
+2720468226465106 05/31
+CVV: 888
+",ekerr@example.net,http://www.ortega.com/,+91 6640900033,"93796 Benjamin Junctions
+Woodwardchester, RI 87414",Montes Inc,165-55-7384,"We are excited to welcome James Hughes to Montes Inc. As part of your onboarding, we have registered your personal details, including your home address (93796 Benjamin Junctions
+Woodwardchester, RI 87414), contact number (+91 6640900033), email (ekerr@example.net), and SSN (165-55-7384). Your corporate credit card, ending in Mastercard
+Tyler Leonard
+2720468226465106 05/31
+CVV: 888
+, will be issued shortly. For more information on company policies, please visit http://www.ortega.com/.","[(26, 38, 'name'), (327, 384, 'credit_card'), (246, 263, 'email'), (465, 487, 'url'), (222, 236, 'phone'), (153, 203, 'address'), (42, 52, 'company'), (275, 286, 'ssn')]"
+Kevin Boyer,"VISA 16 digit
+Haley Brady
+4381295178284946 01/32
+CVC: 078
+",lmclaughlin@example.net,https://proctor-wright.biz/,+05 9476402241,"6917 Alicia Lakes Suite 176
+East Caitlynview, ME 25151",Smith PLC,855-79-3924,"Dear Kevin Boyer, your subscription with Smith PLC is approaching its renewal date. The subscription linked to the email lmclaughlin@example.net, phone number +05 9476402241, and billing address 6917 Alicia Lakes Suite 176
+East Caitlynview, ME 25151 will automatically renew using the credit card ending in VISA 16 digit
+Haley Brady
+4381295178284946 01/32
+CVC: 078
+. The SSN on file for this account is 855-79-3924. To manage your subscription or update payment details, visit https://proctor-wright.biz/. If you need further assistance, please contact our support team.","[(5, 16, 'name'), (307, 365, 'credit_card'), (121, 144, 'email'), (477, 504, 'url'), (159, 173, 'phone'), (195, 249, 'address'), (41, 50, 'company'), (403, 414, 'ssn')]"
+George Ross,"VISA 16 digit
+Jennifer Jones
+4490217451875529 05/32
+CVC: 779
+",sullivandarren@example.com,http://www.barr.info/,+746 4725423744,"157 Poole Glen
+Lake Ronald, NE 63548",Allen-Gilmore,638-71-7663,"During the audit of the financial statements for Allen-Gilmore, it was observed that Mr George Ross, the Chief Financial Officer, approved the purchase of assets worth $500,000 on 157 Poole Glen
+Lake Ronald, NE 63548 The payment was processed through the credit card ending in VISA 16 digit
+Jennifer Jones
+4490217451875529 05/32
+CVC: 779
+ Mr George Ross's Social Security Number (SSN) is 638-71-7663 For any clarifications, please reach out to Mr George Ross at sullivandarren@example.com or contact him directly at +746 4725423744. Further details can be accessed at http://www.barr.info/.","[(88, 99, 'name'), (342, 353, 'name'), (447, 458, 'name'), (277, 338, 'credit_card'), (462, 488, 'email'), (568, 589, 'url'), (516, 531, 'phone'), (180, 216, 'address'), (49, 62, 'company'), (388, 399, 'ssn')]"
+Joshua Chapman,"VISA 16 digit
+David Alexander
+4408673895268898 10/32
+CVC: 966
+",wlawrence@example.net,https://www.gonzalez-cook.net/,+91 1858785840,"9004 Trevino Trace
+Tammyhaven, VT 95079","Jacobson, Williams and Wallace",175-15-3252,"Customer Joshua Chapman from Jacobson, Williams and Wallace, located at 9004 Trevino Trace
+Tammyhaven, VT 95079, has submitted feedback regarding the recent transaction involving their credit card VISA 16 digit
+David Alexander
+4408673895268898 10/32
+CVC: 966
+. They can be reached at wlawrence@example.net or +91 1858785840 for further discussions. The customer's Social Security Number (SSN) on file is 175-15-3252. The feedback was originally submitted through our website at https://www.gonzalez-cook.net/.","[(9, 23, 'name'), (197, 259, 'credit_card'), (284, 305, 'email'), (478, 508, 'url'), (309, 323, 'phone'), (72, 111, 'address'), (29, 59, 'company'), (404, 415, 'ssn')]"

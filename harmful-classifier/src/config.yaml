@@ -1,0 +1,23 @@
+# config.yaml
+# -----------
+# Central configuration for the PII guardrail model.
+# This allows reproducibility and consistency across training + inference.
+# Judges: all scripts (training, inference, orchestration) read from here.
+
+paths:
+  data_raw: data/raw           # raw unprocessed input data
+  data_processed: data/processed # cleaned and vectorized data
+  data_external: data/external # external datasets (if any)
+  models_dir: models           # directory for saved models + vectorizers
+  reports_dir: reports         # evaluation reports, error analysis
+
+thresholds:
+  fail: 0.85   # probability threshold to auto-classify as FAIL (unsafe PII)
+  flag: 0.50   # probability threshold to FLAG borderline cases
+
+training:
+  test_size: 0.2          # 20% data for test split
+  random_state: 42        # reproducibility of train/test split
+  tfidf_ngram_min: 1      # TF-IDF min ngram
+  tfidf_ngram_max: 2      # TF-IDF max ngram (unigrams + bigrams)
+  use_stop_words: true    # remove stopwords for cleaner feature space

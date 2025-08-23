@@ -26,3 +26,7 @@ env/
 # OS junk
 .DS_Store
 Thumbs.db
+
+my models.py
+
+harmful-classifier/data

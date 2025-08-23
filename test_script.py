@@ -30,7 +30,7 @@ def test_redo():
 
 def test_run_full():
     print("\n=== /run_full ===")
-    r = requests.post(f"{BASE}/run_full", json={
+    r = requests.post(f"{BASE_URL}/run_full", json={
         "draft": "This draft mentions a fake API key: sk-1234567890abcdef",
         "user_prompt": "Please audit this"
     })

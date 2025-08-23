@@ -1,55 +1,37 @@
+# audit_service/routers/audit.py
 from fastapi import APIRouter, HTTPException
-from audit_service.models.schemas import AuditRequest, RedoRequest, AuditResult
-from audit_service.services.pii import detect_pii
-from audit_service.services.gemini_client import rate_toxicity_and_bias, rate_hallucination, rewrite_safe
-from audit_service.services.scoring import aggregate
-from audit_service.services.logistic_client import score_harm_probability
-from audit_service.storage.memory_log import add as log_add
-from integrations.notion_logger import log_to_notion
+from audit_service.core import run_audit
+from audit_service.models import AuditRequest, AuditResult  # ✅ now local
+
 
 router = APIRouter()
 
-@router.post("/audit", response_model=AuditResult)
-def audit(payload: AuditRequest):
-    text = payload.doc.strip()
+@router.post("/audit/input", response_model=AuditResult)
+def audit_input(payload: AuditRequest):
+    """
+    Audit user input before sending to the model.
+    - ML models only (PII, bias, etc.)
+    - Returns flags {0/1/2} but does NOT rewrite.
+    - If flagged, system can warn/block user instead of rewriting.
+    """
+    text = payload.response.strip()
     if not text:
-        raise HTTPException(400, "Empty doc")
+        raise HTTPException(400, "Empty user input")
 
-    pii = detect_pii(text)
-    tox = rate_toxicity_and_bias(text)
-    hall = rate_hallucination(text)
-    harm_prob = score_harm_probability(text)   # logistic model check
-
-    # aggregate now includes harm probability
-    score, issues, tier = aggregate(pii, tox, hall, ml_prob=harm_prob)
-
-    safe_output = None
-    if score >= 50:  # auto-redo path
-        safe_output = rewrite_safe(text, issues)
-
-    from audit_service.models import ScoreDetail
-
-    result = AuditResult(
-        risk_score=score,
-        issues=issues,
-        pii=pii,
-        toxicity=ScoreDetail(score=tox, explanation="toxicity probability"),
-        hallucination=ScoreDetail(score=hall, explanation="hallucination probability"),
-        notes=f"tier={tier}, harm_prob={harm_prob:.2f}",
-        safe_output=safe_output,
-        raw={}
-    )
+    result = run_audit_input(text, context=payload.context or "")
+    return AuditResult(**result)
 
 
-    # side-effects: memory log + Notion (for high-risk)
-    status = "Escalated" if score >= 90 else ("Auto-redone" if score >= 50 else "Passed")
-    log_add({"input": text, "result": result.model_dump(), "status": status})
+@router.post("/audit/output", response_model=AuditResult)
+def audit_output(payload: AuditRequest):
+    """
+    Audit AI output before returning to user.
+    - Runs all ML checks (PII, bias, hallucination, etc.)
+    - If flagged, calls Gemini rewrite automatically.
+    """
+    text = payload.response.strip()
+    if not text:
+        raise HTTPException(400, "Empty AI output")
 
-    if score >= 90:  # ✅ only high-risk cases go to Notion
-        log_to_notion(text, score, status, safe_output or "")
-
-    return result
-
-@router.post("/redo")
-def redo(payload: RedoRequest):
-    return {"safe_output": rewrite_safe(payload.doc, payload.issues)}
+    result = run_audit_output(text, context=payload.context or "")
+    return AuditResult(**result)
