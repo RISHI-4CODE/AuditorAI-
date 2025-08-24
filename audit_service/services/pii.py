@@ -73,6 +73,11 @@ PII_PATTERNS = {
         re.compile(r"@[A-Za-z0-9_]{3,20}\b"),
         1,
     ),
+    "PASSWORD": (
+    re.compile(r"(?i)\b(pass(word)?|pwd)\b[\s:]*([A-Za-z0-9\-\_\$\#\%\^\&\@\!]{6,64})"),
+    2,
+    ),
+
 }
 
 
