@@ -10,6 +10,13 @@ Hallucinations / unsupported claims
 
 It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents, all orchestrated by Portia AI, to decide whether an output should PASS, FLAG, or FAIL.
 
+
+Deployment link:
+https:\\aiauditor4.streamlit.app
+
+
+
+
 🚀 Features
 
 🔍 Multi-check system – runs PII, bias, and hallucination audits
@@ -17,6 +24,11 @@ It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents,
 🛠️ Portia Orchestration – Portia acts as the hub, routing input/output through detectors and rewriters in real-time
 📊 Dashboard – Streamlit UI for interactive demos
 🧪 Reproducible experiments – config-driven pipelines with metrics & reports
+
+
+
+
+
 
 🕸️ How Portia Connects Everything
 
@@ -34,8 +46,6 @@ User Input
    ├── Toxicity & Bias Classifier (ML)  
    
    └── Policy Guard (prompt injection / unsafe intent)  
-
-
 
    │
    
@@ -55,17 +65,22 @@ User Input
    
    └── Gemini Adapter → final rewrite pass  
 
-
-
    │
    
    ▼
 Safe Output (PASS/FLAG/FAIL + cleaned text)
 
 
-
-
 Portia ensures every component (regex, ML, Gemini, dashboard) is connected through one orchestration layer, giving a transparent audit trail.
+
+
+
+
+
+
+
+
+
 
 🏗️ Project Structure
 AI AUDITOR
@@ -116,6 +131,8 @@ AI AUDITOR
 └── ...
 
 
+
+
 ⚡ Quickstart
 git clone https://github.com/your-repo/ai-auditor.git
 cd ai-auditor
@@ -147,6 +164,10 @@ Audit Result:
   "cleaned": "Call me tomorrow at [PHONE].",
   "orchestrator": "Portia AI"
 }
+
+
+
+
 
 🎯 Why It Matters
 
