@@ -20,7 +20,11 @@ It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents 
 
 🧪 Reproducible experiments – config-driven pipelines with metrics & reports
 
-🏗️ Project Structure
+
+## 🏗️ Project Structure
+
+
+
 AI AUDITOR
 │
 ├── agent/                   # Entry scripts to run the full auditor pipeline
@@ -69,6 +73,8 @@ AI AUDITOR
 ├── readme.md                 # (You are here 🚀)
 ├── reports/                  # Extra analysis outputs
 └── requirements.txt          # Python dependencies
+##
+
 
 ⚡ Quickstart
 1. Setup
