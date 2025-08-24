@@ -49,7 +49,7 @@ User Input
    
    ├── PII Sanitizer → replaces with [EMAIL], [PHONE], etc.  
    
-   ├── Toxicity Rewriter → neutral rephrasing  
+   ├── Toxicity and bias Rewriter → neutral rephrasing  
    
    ├── Hallucination Checker → Wikipedia + Gemini fallback  
    
