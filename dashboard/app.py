@@ -40,8 +40,24 @@ with tabs[0]:
             with st.spinner("Running input audit..."):
                 results = run_audit_input(user_prompt)
 
-            st.subheader("📋 Audit Results")
-            st.json(results)
+            # show summary banner
+            if results.get("outcome") == "FAIL":
+                reason = results["messages"][0] if results.get("messages") else "Unknown reason"
+                st.error(f"❌ Input Blocked — Reason: {reason}")
+
+                # show detected issues in cards
+                if "findings" in results and results["findings"].get("pii", {}).get("found"):
+                    st.markdown("### 🔎 Detected PII")
+                    for item in results["findings"]["pii"]["types"]:
+                        st.markdown(
+                            f"- **Type:** `{item['type']}` | **Severity:** {item['severity']} | **Match:** `{item['match'].strip()}`"
+                        )
+            else:
+                st.success("✅ Input Passed Audit — No blocking issues found.")
+
+            # expandable full results
+            with st.expander("📋 Detailed Audit Results", expanded=False):
+                st.json(results)
 
 
 # ===============================
@@ -59,8 +75,23 @@ with tabs[1]:
             with st.spinner("Running output audit..."):
                 results = run_audit_output(ai_output)
 
-            st.subheader("📋 Audit Results")
-            st.json(results)
+            # show summary banner
+            if results.get("outcome") == "FAIL":
+                reason = results["messages"][0] if results.get("messages") else "Unknown reason"
+                st.error(f"❌ Output Blocked — Reason: {reason}")
+
+                if "findings" in results and results["findings"].get("pii", {}).get("found"):
+                    st.markdown("### 🔎 Detected PII")
+                    for item in results["findings"]["pii"]["types"]:
+                        st.markdown(
+                            f"- **Type:** `{item['type']}` | **Severity:** {item['severity']} | **Match:** `{item['match'].strip()}`"
+                        )
+            else:
+                st.success("✅ Output Passed Audit — No blocking issues found.")
+
+            # expandable full results
+            with st.expander("📋 Detailed Audit Results", expanded=False):
+                st.json(results)
 
             # If flagged, rewrite with Gemini
             flagged_issues = [flag for flag, val in results["flags"].items() if val > 0]
