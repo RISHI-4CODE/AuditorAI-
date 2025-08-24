@@ -75,25 +75,11 @@ with tabs[1]:
             with st.spinner("Running output audit..."):
                 results = run_audit_output(ai_output)
 
-            # show summary banner
-            if results.get("outcome") == "FAIL":
-                reason = results["messages"][0] if results.get("messages") else "Unknown reason"
-                st.error(f"❌ Output Blocked — Reason: {reason}")
-
-                if "findings" in results and results["findings"].get("pii", {}).get("found"):
-                    st.markdown("### 🔎 Detected PII")
-                    for item in results["findings"]["pii"]["types"]:
-                        st.markdown(
-                            f"- **Type:** `{item['type']}` | **Severity:** {item['severity']} | **Match:** `{item['match'].strip()}`"
-                        )
-            else:
-                st.success("✅ Output Passed Audit — No blocking issues found.")
-
-            # expandable full results
+            # just show audit details in expander
             with st.expander("📋 Detailed Audit Results", expanded=False):
                 st.json(results)
 
-            # If flagged, rewrite with Gemini
+            # Always attempt rewrite if flagged
             flagged_issues = [flag for flag, val in results["flags"].items() if val > 0]
             if flagged_issues:
                 with st.spinner("Rewriting with Gemini..."):
@@ -109,3 +95,5 @@ with tabs[1]:
                 with col2:
                     st.markdown("**After**")
                     st.code(rewritten, language="markdown")
+            else:
+                st.info("No flagged issues detected — rewrite not required.")
