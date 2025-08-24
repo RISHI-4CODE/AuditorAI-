@@ -1,23 +1,18 @@
 # audit_service/services/hallucination.py
 
-import wikipedia
 import re
 import logging
-import os
 from typing import Tuple
-from dotenv import load_dotenv
-
-# Load .env from project root
-load_dotenv()
-
+import wikipedia
+import os
 import google.generativeai as genai
 
 
 class HallucinationClassifier:
     """
-    Hybrid Hallucination Detector:
-    1. Wikipedia entity cross-check
-    2. Gemini fallback (if GEMINI_API_KEY available in .env)
+    Hybrid Hallucination Detector (Portia orchestration):
+    1. Wikipedia entity cross-check (cheap, deterministic)
+    2. Gemini fallback ONLY if uncertain (FLAG)
     """
 
     def __init__(self, use_llm_fallback: bool = True):
@@ -33,43 +28,35 @@ class HallucinationClassifier:
                 self.use_llm_fallback = False
 
     def _extract_entities(self, text: str):
-        """Capture single + multi-word capitalized entities (e.g., 'Eiffel Tower')."""
+        """Capture capitalized entities (single + multi-word)."""
         return re.findall(r"\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)\b", text)
 
-    def _wiki_check(self, text: str) -> Tuple[str, float]:
+    def _wiki_check(self, text: str) -> Tuple[str, int]:
         """
         Check claim against Wikipedia.
-        Returns (label, confidence).
+        Returns (label, severity) where severity = 0 (PASS), 1 (FLAG), 2 (FAIL).
         """
         entities = self._extract_entities(text)
         if not entities:
-            return "FLAG", 0.4  # No entities → can't fact-check
+            return "FLAG", 1  # no entities → cannot fact-check
 
         try:
             for entity in entities:
-                summary = wikipedia.summary(entity, sentences=2)
-                summary_lower = summary.lower()
-                text_lower = text.lower()
+                summary = wikipedia.summary(entity, sentences=2).lower()
+                if entity.lower() not in summary:
+                    return "FLAG", 1  # mismatch → uncertain
 
-                # Simple sanity check: entity must appear in summary
-                if entity.lower() not in summary_lower:
-                    return "FLAG", 0.6
-
-                # Example hardcoded mismatch detection
-                if "eiffel tower" in text_lower and "berlin" in text_lower and "paris" in summary_lower:
-                    return "FAIL", 0.95
-
-            return "PASS", 0.8
+            return "PASS", 0
         except Exception as e:
             logging.warning(f"Wikipedia lookup failed: {e}")
-            return "FLAG", 0.4
+            return "FLAG", 1
 
-    def _gemini_fallback(self, text: str) -> Tuple[str, float]:
+    def _gemini_fallback(self, text: str) -> Tuple[str, int]:
         """
         Use Gemini to classify hallucination if available.
         """
         if not self.use_llm_fallback:
-            return "FLAG", 0.5
+            return "FLAG", 1
 
         try:
             prompt = (
@@ -82,29 +69,27 @@ class HallucinationClassifier:
                 "Answer with only PASS, FLAG, or FAIL."
             )
             resp = self.gemini_model.generate_content(prompt)
-            raw = resp.text.strip().upper()
+            raw = resp.text.strip().upper() if resp and resp.text else ""
 
-            if "FAIL" in raw:
-                return "FAIL", 0.9
-            elif "PASS" in raw:
-                return "PASS", 0.9
-            elif "FLAG" in raw:
-                return "FLAG", 0.7
+            if raw == "FAIL":
+                return "FAIL", 2
+            elif raw == "PASS":
+                return "PASS", 0
             else:
-                return "FLAG", 0.5
+                return "FLAG", 1
         except Exception as e:
             logging.error(f"Gemini fallback failed: {e}")
-            return "FLAG", 0.5
+            return "FLAG", 1
 
-    def predict(self, text: str) -> Tuple[str, float]:
+    def predict(self, text: str) -> Tuple[str, int]:
         """
         Main classification pipeline.
-        Returns (label, confidence).
+        Returns (label, severity).
         """
-        label, conf = self._wiki_check(text)
+        label, severity = self._wiki_check(text)
 
-        # If uncertain or wrong, always ask Gemini for second opinion
-        if label in ["FLAG", "FAIL"] and self.use_llm_fallback:
+        # Only escalate to Gemini if wiki was uncertain
+        if label == "FLAG" and self.use_llm_fallback:
             return self._gemini_fallback(text)
 
-        return label, conf
+        return label, severity

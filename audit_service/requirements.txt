@@ -2,7 +2,9 @@ fastapi
 uvicorn[standard]
 python-dotenv
 google-generativeai
-slack-sdk
-notion-client
+wikipedia
 scikit-learn
 pandas
+detoxify
+torch
+streamlit

@@ -1,3 +1,5 @@
+#THIS IS A STUB FOR FUTURE FASTAPI BACKEND IMPLEMENTATION SO THAT WE COULD PROVIDE OUR SERVICES WITH AN API
+
 """
 Unified bridge to run selected audit models:
 - PII (regex only, no ML)

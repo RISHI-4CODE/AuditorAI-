@@ -20,7 +20,13 @@ PII_PATTERNS = {
     # --- Identity Numbers ---
     "SSN_US": (re.compile(r"\b\d{3}-\d{2}-\d{4}\b"), 2),
     "PASSPORT": (re.compile(r"\b[A-Z]{1,2}\d{6,9}\b"), 2),  # Generic (USA, EU, etc.)
-    "DRIVER_LICENSE": (re.compile(r"\b[A-Z0-9]{5,15}\b"), 1),
+
+    # 🔧 PATCHED: driver license — require context words
+    "DRIVER_LICENSE": (
+        re.compile(r"\b(?:DL|Driver.?License|Lic|D[LR]N)[\s:]*[A-Z0-9]{5,15}\b", re.IGNORECASE),
+        1,
+    ),
+
     "AADHAAR_IN": (re.compile(r"\b\d{4}\s\d{4}\s\d{4}\b"), 2),  # India Aadhaar
     "PAN_IN": (re.compile(r"\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b"), 2),  # India PAN
 
@@ -43,9 +49,19 @@ PII_PATTERNS = {
         1,
     ),
 
-    # --- Keys / Tokens ---
-    "API_KEY": (
-        re.compile(r"\b(?:sk|pk|api|key)[_\-]?[a-zA-Z0-9]{16,64}\b"),
+    "API_KEY_PREFIXED": (
+        re.compile(r"\b(?:sk|pk|api|key)[\-\_a-zA-Z0-9\$\#]{12,64}\b"),
+        2,
+    ),
+
+    # 🔧 PATCHED: generic API keys — keep but downgrade severity
+    "API_KEY_GENERIC": (
+        re.compile(r"\b[a-zA-Z0-9\-\_\$\#]{20,64}\b"),
+        1,  # was 2, now FLAG instead of FAIL
+    ),
+
+    "API_KEY_CONTEXTUAL": (
+        re.compile(r"(?i)\bapi[\s\-_]?key\b[:=\s]*([A-Za-z0-9\-\_\$\#]{8,64})"),
         2,
     ),
     "JWT": (
@@ -53,11 +69,6 @@ PII_PATTERNS = {
         2,
     ),
 
-    # --- Names ---
-    "PERSON_NAME": (
-        re.compile(r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)+)\b"),
-        1,
-    ),
     "USERNAME": (
         re.compile(r"@[A-Za-z0-9_]{3,20}\b"),
         1,

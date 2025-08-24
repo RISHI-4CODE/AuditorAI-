@@ -1,3 +1,4 @@
+#kept for future notion logging
 # integrations/notion_logger.py
 import os
 from notion_client import Client

@@ -1,6 +1,6 @@
 # audit_service/models.py
 from typing import Dict, Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class AuditRequest(BaseModel):
@@ -15,3 +15,6 @@ class AuditResult(BaseModel):
     flags: Dict[str, int]         # {pii: 0/1/2, bias: 0/1/2, hallucination: 0/1/2}
     original: str                 # raw response text
     cleaned: Optional[str] = None # Gemini-cleaned text if needed
+
+
+    model_config = ConfigDict(extra="allow")
