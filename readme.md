@@ -23,27 +23,46 @@ It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents,
 Portia AI is the central orchestrator of the pipeline:
 
 User Input
+   
    │
+   
    ▼
 [Portia] → Input Audit  
+
    ├── PII Detector (regex/rules)  
+   
    ├── Toxicity & Bias Classifier (ML)  
+   
    └── Policy Guard (prompt injection / unsafe intent)  
 
-   │
-   ▼
-[LLM: GPT/Gemini/Other] → generates raw output  
-   │
-   ▼
-[Portia] → Output Audit  
-   ├── PII Sanitizer → replaces with [EMAIL], [PHONE], etc.  
-   ├── Toxicity Rewriter → neutral rephrasing  
-   ├── Hallucination Checker → Wikipedia + Gemini fallback  
-   └── Gemini Adapter → final rewrite pass  
+
 
    │
+   
+   ▼
+[LLM: GPT/Gemini/Other] → generates raw output  
+   
+   │
+   
+   ▼
+[Portia] → Output Audit  
+   
+   ├── PII Sanitizer → replaces with [EMAIL], [PHONE], etc.  
+   
+   ├── Toxicity Rewriter → neutral rephrasing  
+   
+   ├── Hallucination Checker → Wikipedia + Gemini fallback  
+   
+   └── Gemini Adapter → final rewrite pass  
+
+
+
+   │
+   
    ▼
 Safe Output (PASS/FLAG/FAIL + cleaned text)
+
+
 
 
 Portia ensures every component (regex, ML, Gemini, dashboard) is connected through one orchestration layer, giving a transparent audit trail.
