@@ -41,8 +41,8 @@ with tabs[0]:
                 results = run_audit_input(user_prompt)
 
             # show summary banner
-            if results.get("outcome") == "FAIL":
-                reason = results["messages"][0] if results.get("messages") else "Unknown reason"
+            if results.get("outcome") in ["FAIL", "FLAG"]:
+                reason = results["messages"][0] if results.get("messages") else "Policy violation detected"
                 st.error(f"❌ Input Blocked — Reason: {reason}")
 
                 # show detected issues in cards
