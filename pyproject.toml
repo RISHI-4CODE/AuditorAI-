@@ -1,2 +1,2 @@
 [project.scripts]
-portia-core = "audit_service.main:app"
+portia-core = "audit_service.__main__:main"
