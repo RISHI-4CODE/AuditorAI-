@@ -26,53 +26,102 @@ It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents 
 
 
 AI AUDITOR
+
 │
+
 ├── agent/                   # Entry scripts to run the full auditor pipeline
+
 │   ├── auditor.yaml          # Config file for orchestrating audit checks
+
 │   └── run.py                # Launches auditor agent end-to-end
+
 │
+
 ├── app/                     # High-level orchestration layer
+
 │   ├── auditor.py            # Main auditing logic
+
 │   └── auditor_agent.py      # Agent wrapper around auditor for reuse
+
 │
+
 ├── audit_service/            # Core audit microservice (stub API)
+
 │   ├── __main__.py           # Run module as script
+
 │   ├── adapters/             # Adapters for external models (e.g., Gemini)
+
 │   ├── audit_checks/         # PII, toxicity, hallucination checks
+
 │   │   └── prompts.py        # Prompt templates for LLM-based checks
+
 │   ├── core.py               # Core orchestration logic
+
 │   ├── main.py               # FastAPI entrypoint (stubbed for now)
+
 │   ├── models/               # Stored ML models
+
 │   │   └── toxicity_and_biasness/
+
 │   │       ├── logistic.pkl
+
 │   │       └── tfidf_vectorizer.pkl
+
 │   ├── models.py             # Pydantic schemas for requests/responses
+
 │   ├── routers/              # API route handlers (audit endpoints)
+
 │   ├── services/             # Service clients (PII, toxicity, rewrite)
+
 │   └── storage/              # In-memory or file-based logging
+
 │
+
 ├── dashboard/                # Streamlit dashboard
+
 │   └── app.py                 # Visual UI for audits
+
 │
+
+
 │
+
 ├── harmful-classifier/       # ML classifier development
+
 │   ├── data/                  # Datasets for training & testing
+
 │   │   └── processed/          # Cleaned versions of datasets
+
 │   ├── models/                # Saved models (e.g., PII logistic regression)
+
 │   ├── reports/               # Training reports, metrics, confusion matrices
+
 │   ├── src/                   # Source code for training pipelines
+
 │   │   ├── config.yaml         # Config (thresholds, paths)
+
 │   │   ├── features/           # Feature engineering (regex, TF-IDF, etc.)
+
 │   │   ├── models/             # Model inference & analysis
+
 │   │   └── pipeline/           # Service wrapper (FastAPI stub)
+
 │   └── tests/                 # Unit tests
+
 │
+
 ├── integrations/             # (Optional) Integrations (Notion/Slack stubs)
+
 │
+
 ├── pyproject.toml            # Project metadata + scripts
+
 ├── readme.md                 # (You are here 🚀)
+
 ├── reports/                  # Extra analysis outputs
+
 └── requirements.txt          # Python dependencies
+
 ##
 
 
