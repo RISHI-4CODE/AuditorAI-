@@ -80,18 +80,14 @@ PII_PATTERNS = {
 
 }
 
-
 def detect_pii(text: str) -> List[Dict]:
-    """
-    Detect PII using regex rules.
-    Returns a list of dicts: {type, severity, match}
-    """
     findings = []
     for pii_type, (pattern, severity) in PII_PATTERNS.items():
-        matches = pattern.findall(text)
-        if matches:
-            for m in matches if isinstance(matches, list) else [matches]:
-                findings.append(
-                    {"type": pii_type, "severity": severity, "match": m}
-                )
+        for match in pattern.finditer(text):
+            findings.append({
+                "type": pii_type,
+                "severity": severity,
+                "match": match.group(0)
+            })
     return findings
+
