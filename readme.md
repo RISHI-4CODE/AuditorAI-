@@ -50,28 +50,52 @@ Portia ensures every component (regex, ML, Gemini, dashboard) is connected throu
 
 🏗️ Project Structure
 AI AUDITOR
+
 │
+
 ├── agent/              # Entry scripts (Portia-driven pipelines)
+
 │   ├── auditor.yaml    # Config file (Portia orchestrator)
+
 │   └── run.py          # Launches end-to-end auditor via Portia
+
+
 │
+
 ├── app/                # High-level orchestration layer
+
 │   ├── auditor.py      # Main auditing logic (Portia orchestrated)
+
 │   └── auditor_agent.py# Agent wrapper (Portia-powered)
+
 │
+
 ├── audit_service/      # Core audit microservice
+
 │   ├── adapters/       # Gemini + Portia adapters
+
 │   ├── audit_checks/   # PII, toxicity, hallucination checks
+
 │   ├── core.py         # Orchestration glue with Portia
+
 │   ├── models/         # ML classifiers (toxicity, bias)
+
 │   ├── routers/        # API endpoints for audits
+
 │   └── services/       # Portia service clients
+
 │
+
 ├── dashboard/          # Streamlit dashboard (queries via Portia)
+
 │
+
 ├── harmful-classifier/ # ML model training
+
 │
+
 └── ...
+
 
 ⚡ Quickstart
 git clone https://github.com/your-repo/ai-auditor.git
