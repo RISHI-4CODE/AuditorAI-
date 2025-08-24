@@ -8,84 +8,127 @@ Toxicity & bias
 
 Hallucinations / unsupported claims
 
-It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents to decide whether an output should PASS, FLAG, or FAIL.
+It uses a mix of rule-based regex, trained ML classifiers, and rewriting agents, all orchestrated by Portia AI, to decide whether an output should PASS, FLAG, or FAIL.
 
 🚀 Features
 
 🔍 Multi-check system – runs PII, bias, and hallucination audits
-
 🤖 Automatic rewrite – unsafe text is rewritten with Gemini
-
+🛠️ Portia Orchestration – Portia acts as the hub, routing input/output through detectors and rewriters in real-time
 📊 Dashboard – Streamlit UI for interactive demos
-
 🧪 Reproducible experiments – config-driven pipelines with metrics & reports
 
+🕸️ How Portia Connects Everything
 
-## 🏗️ Project Structure
+Portia AI is the central orchestrator of the pipeline:
+
+User Input
+   
+   │
+   
+   ▼
+[Portia] → Input Audit  
+
+   ├── PII Detector (regex/rules)  
+   
+   ├── Toxicity & Bias Classifier (ML)  
+   
+   └── Policy Guard (prompt injection / unsafe intent)  
 
 
 
+   │
+   
+   ▼
+[LLM: GPT/Gemini/Other] → generates raw output  
+   
+   │
+   
+   ▼
+[Portia] → Output Audit  
+   
+   ├── PII Sanitizer → replaces with [EMAIL], [PHONE], etc.  
+   
+   ├── Toxicity and bias Rewriter → neutral rephrasing  
+   
+   ├── Hallucination Checker → Wikipedia + Gemini fallback  
+   
+   └── Gemini Adapter → final rewrite pass  
+
+
+
+   │
+   
+   ▼
+Safe Output (PASS/FLAG/FAIL + cleaned text)
+
+
+
+
+Portia ensures every component (regex, ML, Gemini, dashboard) is connected through one orchestration layer, giving a transparent audit trail.
+
+🏗️ Project Structure
 AI AUDITOR
+
 │
-├── agent/                   # Entry scripts to run the full auditor pipeline
-│   ├── auditor.yaml          # Config file for orchestrating audit checks
-│   └── run.py                # Launches auditor agent end-to-end
+
+├── agent/              # Entry scripts (Portia-driven pipelines)
+
+│   ├── auditor.yaml    # Config file (Portia orchestrator)
+
+│   └── run.py          # Launches end-to-end auditor via Portia
+
+
 │
-├── app/                     # High-level orchestration layer
-│   ├── auditor.py            # Main auditing logic
-│   └── auditor_agent.py      # Agent wrapper around auditor for reuse
+
+├── app/                # High-level orchestration layer
+
+│   ├── auditor.py      # Main auditing logic (Portia orchestrated)
+
+│   └── auditor_agent.py# Agent wrapper (Portia-powered)
+
 │
-├── audit_service/            # Core audit microservice (stub API)
-│   ├── __main__.py           # Run module as script
-│   ├── adapters/             # Adapters for external models (e.g., Gemini)
-│   ├── audit_checks/         # PII, toxicity, hallucination checks
-│   │   └── prompts.py        # Prompt templates for LLM-based checks
-│   ├── core.py               # Core orchestration logic
-│   ├── main.py               # FastAPI entrypoint (stubbed for now)
-│   ├── models/               # Stored ML models
-│   │   └── toxicity_and_biasness/
-│   │       ├── logistic.pkl
-│   │       └── tfidf_vectorizer.pkl
-│   ├── models.py             # Pydantic schemas for requests/responses
-│   ├── routers/              # API route handlers (audit endpoints)
-│   ├── services/             # Service clients (PII, toxicity, rewrite)
-│   └── storage/              # In-memory or file-based logging
+
+├── audit_service/      # Core audit microservice
+
+│   ├── adapters/       # Gemini + Portia adapters
+
+│   ├── audit_checks/   # PII, toxicity, hallucination checks
+
+│   ├── core.py         # Orchestration glue with Portia
+
+│   ├── models/         # ML classifiers (toxicity, bias)
+
+│   ├── routers/        # API endpoints for audits
+
+│   └── services/       # Portia service clients
+
 │
-├── dashboard/                # Streamlit dashboard
-│   └── app.py                 # Visual UI for audits
+
+├── dashboard/          # Streamlit dashboard (queries via Portia)
+
 │
+
+├── harmful-classifier/ # ML model training
+
 │
-├── harmful-classifier/       # ML classifier development
-│   ├── data/                  # Datasets for training & testing
-│   │   └── processed/          # Cleaned versions of datasets
-│   ├── models/                # Saved models (e.g., PII logistic regression)
-│   ├── reports/               # Training reports, metrics, confusion matrices
-│   ├── src/                   # Source code for training pipelines
-│   │   ├── config.yaml         # Config (thresholds, paths)
-│   │   ├── features/           # Feature engineering (regex, TF-IDF, etc.)
-│   │   ├── models/             # Model inference & analysis
-│   │   └── pipeline/           # Service wrapper (FastAPI stub)
-│   └── tests/                 # Unit tests
-│
-├── integrations/             # (Optional) Integrations (Notion/Slack stubs)
-│
-├── pyproject.toml            # Project metadata + scripts
-├── readme.md                 # (You are here 🚀)
-├── reports/                  # Extra analysis outputs
-└── requirements.txt          # Python dependencies
-##
+
+└── ...
 
 
 ⚡ Quickstart
-1. Setup
 git clone https://github.com/your-repo/ai-auditor.git
 cd ai-auditor
 pip install -r requirements.txt
 
-2. Run Auditor
+
+Run full auditor (via Portia):
+
 python agent/run.py --config agent/auditor.yaml
 
-3. Launch Dashboard
+
+Launch dashboard:
+
 streamlit run dashboard/app.py
 
 📊 Example Output
@@ -101,23 +144,20 @@ Audit Result:
   "outcome": "FAIL",
   "flags": {"pii": 2, "bias": 0, "hallucination": 0},
   "original": "Call me at 9876543210 tomorrow.",
-  "cleaned": "Call me tomorrow at [redacted]."
+  "cleaned": "Call me tomorrow at [PHONE].",
+  "orchestrator": "Portia AI"
 }
 
 🎯 Why It Matters
 
 Ensures responsible AI usage in real-world systems
 
-Prevents PII leaks and unsafe outputs
+Portia AI guarantees all checks (PII, toxicity, hallucination) are orchestrated in one transparent pipeline
 
-Provides transparent PASS/FLAG/FAIL audit trail
+Prevents leaks, unsafe outputs, and bias at scale
 
-Easily extensible with new models & datasets
+Provides PASS/FLAG/FAIL audit trail with Portia-managed logs
 
-Demo-ready (dashboard)
+Extensible with new checks, models, and adapters
 
-Tackles AI safety, a top concern for enterprises
-
-Research-backed with ML, not just LLM prompts
-
-Balanced between practicality and innovation
+Demo-ready dashboard
