@@ -1,25 +1,23 @@
+# Core API
 fastapi==0.112.2
 uvicorn[standard]==0.30.6
 python-dotenv==1.0.1
-google-generativeai==0.7.2
+pydantic==2.8.2
+requests==2.32.3
+aiohttp==3.10.5
+rich==13.7.1
+tqdm==4.66.5
+
+# Integrations
 slack_sdk==3.30.0
 notion-client==2.3.0
-pydantic==2.8.2
+google-generativeai==0.7.2
+openai==1.46.0
 
-torch
-torchvision
-torchaudio
-transformers
-datasets
-scikit-learn
-slack_sdk
-python-dotenv
-requests
-aiohttp
-openai
-google-generativeai
-rich
-tqdm
-pydantic
-fastapi
-uvicorn
+# ML + NLP
+scikit-learn==1.5.2
+transformers==4.44.2
+datasets==3.0.2
+torch==2.4.1
+torchvision==0.19.1
+torchaudio==2.4.1
